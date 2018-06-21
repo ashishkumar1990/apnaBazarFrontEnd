@@ -1,0 +1,82 @@
+<div class="wrapper">
+  <div class="page-header" style="background-image: url('../assets/img/login-image.jpg');">
+    <div class="filter"></div>
+    <div class="container">
+      <div class="row">
+        <div class=" mr-auto ml-auto">
+          <div class="card card-register" style="max-width: none">
+            <h3 class="title">Welcome</h3>
+            <div class="social-line text-center">
+              <a href="#pablo" class="btn btn-neutral btn-facebook btn-just-icon">
+                <i class="fa fa-facebook-square"></i>
+              </a>
+              <a href="#pablo" class="btn btn-neutral btn-google btn-just-icon">
+                <i class="fa fa-google-plus"></i>
+              </a>
+              <a href="#pablo" class="btn btn-neutral btn-twitter btn-just-icon">
+                <i class="fa fa-twitter"></i>
+              </a>
+            </div>
+            <h3 class="title">Create New Customer Account</h3>
+            <form   #signupForm="ngForm">
+              <label>Personal Information</label>
+              <div class="dropdown-divider"></div>
+              <label>First Name *</label>
+              <input type="text" class="form-control" id="firstname" placeholder="First Name" required minlength="5" [(ngModel)]="signup.firstname" name="firstName" #firstName="ngModel">
+              <div *ngIf="firstName.errors && (firstName.dirty || firstName.touched)" class="alert alert-danger">
+                <div [hidden]="!firstName.errors.required">
+                First name is minimum length should be 5!
+              </div>  </div>
+              <label>Last Name *</label>
+              <input type="text" class="form-control"  id="lastname" required minlength="5"  [(ngModel)]="signup.lastname" placeholder="Last Name" name="lastName" #lastName="ngModel">
+              <div *ngIf="lastName.errors && (lastName.dirty || lastName.touched)" class="alert alert-danger">
+                <div [hidden]="!lastName.errors.required">
+                Last name is minimum length should be 5!
+              </div>  </div>
+              <label>Sign-in Information</label>
+              <div class="dropdown-divider"></div>
+              <label>Email *</label>
+              <div style="display: block; margin-left: auto;margin-right: auto;position: relative;">
+              <input type="text" class="form-control" id="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" [(ngModel)]="signup.email" placeholder="Email" name="email" #email="ngModel" (blur)="email.valid && checkEmailAvailable()">
+              <img [hidden]="!signup.emailAvailable" style="height: 30px; margin-left: auto;margin-right: auto; margin-top: auto;position: absolute; right: 5px;top: 5px;" src='../assets/img/email-check.png' />
+              </div>
+              <div [hidden]="!email.valid || signup.emailAvailable||signup.emailExists" class="alert alert-danger">
+                Check Email Availability.
+              </div>
+              <div [hidden]="!signup.emailExists" class="alert alert-danger">
+               Email already register.
+              </div>
+              <div  *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">
+                 <div [hidden]="!email.errors.pattern">
+                valid Email Id is required!
+              </div>
+              </div>
+
+              <label>Password *</label>
+              <input type="password" class="form-control" id="password" required  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}" [(ngModel)]="signup.password" placeholder="Password" name="password" #password="ngModel">
+              <div *ngIf="password.errors && (password.dirty || password.touched)" class="alert alert-danger">
+                <div [hidden]="!password.errors.pattern">
+                  password is contains Lower Case, Upper Case, Digits, Special Characters.
+              </div>  </div>
+              <label>Conform Password *</label>
+              <input type="password" class="form-control" id="conformPassword" placeholder="Conform Password" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}" [(ngModel)]="signup.conformPassword" name="conformPassword" #conformPassword="ngModel">
+              <div *ngIf="conformPassword.errors && (conformPassword.dirty || conformPassword.touched)" class="alert alert-danger">
+                <div [hidden]="!conformPassword.errors.pattern">
+                  Conform password is same as password.
+                </div>  </div>
+              <div class="alert alert-danger" [hidden]="!(conformPassword.valid && password.valid && (signup.conformPassword!==signup.password))">
+                Password Mismatch!
+              </div>
+              <button type="submit" [disabled]="!signupForm.form.valid && signup.emailAvailable"  class="btn btn-danger btn-block btn-round" (click)="createCustomerAccount()">Register</button>
+            </form>
+            <a  href="http://localhost:4200/home"> <img  style="height:30px;display: block;margin-left: auto;margin-right: auto;margin-top: 5px;cursor: pointer;" src='../assets/img/home-button.png' /> </a>
+          </div>
+        </div>
+
+      </div>
+      <div class="footer register-footer text-center">
+        <h6>&copy;{{test | date: 'yyyy'}}, made with <i class="fa fa-heart heart"></i> by Ashish Kumar</h6>
+      </div>
+    </div>
+  </div>
+</div>

@@ -38,13 +38,10 @@
               <label>Email *</label>
               <div style="display: block; margin-left: auto;margin-right: auto;position: relative;">
               <input type="text" class="form-control" id="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" [(ngModel)]="signup.email" placeholder="Email" name="email" #email="ngModel" (blur)="email.valid && checkEmailAvailable()">
-              <img [hidden]="!signup.emailAvailable" style="height: 30px; margin-left: auto;margin-right: auto; margin-top: auto;position: absolute; right: 5px;top: 5px;" src='../assets/img/email-check.png' />
+              <img [hidden]="!signup.emailExists||email.incorrect" style="height: 30px; margin-left: auto;margin-right: auto; margin-top: auto;position: absolute; right: 5px;top: 5px;" src='../assets/img/email-check.png' />
               </div>
-              <div [hidden]="!email.valid || signup.emailAvailable" class="alert alert-danger">
+              <div [hidden]="!(email.valid && signup.emailAvailable)||signup.emailExists" class="alert alert-danger">
                 Check Email Availability.
-              </div>
-              <div [hidden]="!signup.emailExists" class="alert alert-danger">
-               Email already register.
               </div>
               <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger"
                    [hidden]="!email.errors.pattern">

@@ -4,7 +4,7 @@
 export class Signup {
     "email":string;
     emailExists:boolean;
-    "emailAvailable":boolean;
+    "emailAvailable":string;
     "firstname":string;
     "lastname":string;
     "storeId":number;

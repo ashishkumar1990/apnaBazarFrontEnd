@@ -3,7 +3,8 @@ import { SignService } from './sign.service';
 import { ToastrService } from 'ngx-toastr';
 import { Signup } from './signup';
 import { FormsModule, NgForm}  from '@angular/forms';
-
+import { AppRoutingModule} from '../app.routing';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -15,7 +16,7 @@ export class SignupComponent implements OnInit {
   signup:Signup = {
     "email": "",
     "emailExists":false,
-    "emailAvailable":false,
+    "emailAvailable":"",
     "firstname": "",
     "lastname": "",
     "storeId": 1,
@@ -26,13 +27,13 @@ export class SignupComponent implements OnInit {
   signupForm: NgForm;
   @ViewChild('signupForm') currentForm: NgForm;
 
-  constructor(private _signService: SignService,private toastr: ToastrService) { }
+  constructor(private _signService: SignService,private toastr: ToastrService,private _router: Router) { }
 
   ngOnInit() {
   }
 
   checkEmailAvailable(){
-    if (this.signup.emailAvailable) {
+    if (this.signup.emailAvailable===this.signup.email) {
       return;
     }
     if (this.signup.email) {
@@ -41,13 +42,13 @@ export class SignupComponent implements OnInit {
       this._signService.checkEmailAvailable(emailData)
           .subscribe(
               emailExists => {
-                this.signup.emailAvailable = emailExists;
-                if(!this.signup.emailAvailable ){
-                  this.signup.emailExists=true;
+                this.signup.emailExists = emailExists;
+                if(!this.signup.emailExists){
                   this.currentForm.form.controls['email'].setErrors({'incorrect': true});
                   this.toastr.error("Email already exists,please add new One");
                 }else{
                   this.toastr.success("Email Added Successfully");
+                  //working//this._router.navigateByUrl('/home');
                 }
 
           },

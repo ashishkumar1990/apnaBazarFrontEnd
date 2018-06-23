@@ -1,4 +1,4 @@
-<div class="wrapper"  *ngIf="catagories && catagories.length>0">
+<div class="wrapper"  *ngIf="categories && categories.length>0">
     <nav class="navbar navbar-expand-md bg-primary">
         <a href="http://localhost:4200/home"> <img
                 style="height:60px;display: block;margin-left: 38px;margin-right: 30px;cursor: pointer;"
@@ -6,7 +6,7 @@
 
         <div class="collapse navbar-collapse" id="navbar-menu">
             <ul class="navbar-nav mr-auto">
-                <div class="nav-item dropdown" *ngFor="let category of catagories">
+                <div class="nav-item dropdown" *ngFor="let category of categories">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="dropdownMenuButton" href="#pk"
                        role="button" aria-haspopup="true" aria-expanded="false"
                        style="white-space: nowrap;color: #66615B;">{{category.name}}</a>
@@ -37,7 +37,7 @@
             </ul>
         </div>
     </nav>
-    <!--<ng-container *ngFor="let cat of catagories">-->
+    <!--<ng-container *ngFor="let cat of categories">-->
         <!--<div class="list-athletes">-->
             <!--<div class="list-athletes-details">-->
                 <!--<p>{{ cat.name }}</p>-->
@@ -197,7 +197,7 @@
     <!--</div>-->
 </div>
 
-<div class="wrapper" style="height: 700px;padding-top: 25%; margin:0 auto;" *ngIf="!catagories || catagories.length===0">
+<div class="wrapper" style="height: 700px;padding-top: 25%; margin:0 auto;" *ngIf="!categories">
     <mat-spinner strokeWidth="3" [diameter]="50" mode='indeterminate' style="margin:0 auto;stroke: #673ab7;" ></mat-spinner>
-<span style="margin-left: 46%;">Loading Categories...</span>
+<span style="margin-left: 46%;">{{loadCategories}}</span>
 </div>

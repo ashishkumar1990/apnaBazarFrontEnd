@@ -1,35 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import {Http, Response, Headers, RequestOptions, URLSearchParams} from '@angular/http';
-//import {VERSION} from '@angular/material';
-
+import { HomeService } from './home.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss']
+    styleUrls: ['./home.component.scss'],
+    providers:[HomeService]
 
 })
 
 export class HomeComponent implements OnInit {
-    //public catagories =<any>[];
-    //version = VERSION;
-    catagories: any;
-    constructor(private _http: Http) { }
+    categories: any;
+    loadCategories:string="Loading Categories...";
+    constructor(private _homeService: HomeService,private toastr: ToastrService) {
+    }
 
     ngOnInit() {
-        let headers = new Headers({
-            'Content-Type': 'application/json',
-            'Accept'      : 'application/json',
-        });
-        // headers.append('Authorization', ' Bearer 3sl175yf8v8pec7hjll9v79mt1w0tvpv');
+        this._homeService.getCategories()
+            .subscribe(
+                categories => {
+                this.categories = categories.children_data;
+                this.toastr.success("Categories Loaded Successfully");
+                //this._router.navigate(['Home']);
+            },
+                error=> {
+                this.categories =[];
+                this.toastr.error(error.message);
+            }
 
-        let options = new RequestOptions({headers: headers});
 
-         this._http.get('http://localhost/rest/V1/categories?fields=children_data[id,parent_id,name,is_active,position,level,children_data[id,parent_id,name,is_active,position,level]]', options)
-            .subscribe(data => {
-                 this.catagories = data.json().children_data;
-                 console.log(this.catagories);
-            });
-
+        );
     }
 }

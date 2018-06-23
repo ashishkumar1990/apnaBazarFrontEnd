@@ -1,10 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import {Http, Response, Headers, RequestOptions, URLSearchParams} from '@angular/http';
+import { Component, OnInit,ViewChild} from '@angular/core';
+import { SignService } from './sign.service';
+import { ToastrService } from 'ngx-toastr';
 import { Signup } from './signup';
+import { FormsModule, NgForm}  from '@angular/forms';
+
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  styleUrls: ['./signup.component.scss'],
+  providers:[SignService]
 })
 export class SignupComponent implements OnInit {
   signup:Signup = {
@@ -18,8 +23,10 @@ export class SignupComponent implements OnInit {
     "password": "",
     "conformPassword": ""
   };
+  signupForm: NgForm;
+  @ViewChild('signupForm') currentForm: NgForm;
 
-  constructor(private _http: Http) { }
+  constructor(private _signService: SignService,private toastr: ToastrService) { }
 
   ngOnInit() {
   }
@@ -30,14 +37,25 @@ export class SignupComponent implements OnInit {
     }
     if (this.signup.email) {
       let emailData = {"customerEmail": this.signup.email};
-      this._http.post('http://localhost/rest/V1/customers/isEmailAvailable', emailData)
-          .subscribe(data => {
-            this.signup.emailAvailable = data.json();
-            if(!this.signup.emailAvailable ){
-              this.signup.emailExists = true;
-            }
 
-          });
+      this._signService.checkEmailAvailable(emailData)
+          .subscribe(
+              emailExists => {
+                this.signup.emailAvailable = emailExists;
+                if(!this.signup.emailAvailable ){
+                  this.signup.emailExists=true;
+                  this.currentForm.form.controls['email'].setErrors({'incorrect': true});
+                  this.toastr.error("Email already exists,please add new One");
+                }else{
+                  this.toastr.success("Email Added Successfully");
+                }
+
+          },
+              error=> {
+            this.toastr.error(error.message);
+          }
+      );
+
     }
 
   }
@@ -54,10 +72,21 @@ export class SignupComponent implements OnInit {
         },
         "password":this.signup.password,
       };
-      this._http.post('http://localhost/rest/V1/customers/', customerData)
-          .subscribe(data => {
-            console.log(data);
-          });
+
+      this._signService.createCustomer(customerData)
+          .subscribe(
+              customer => {
+                console.log(customer);
+            this.toastr.success("Categories Loaded Successfully");
+            //this._router.navigate(['Home']);
+          },
+              error=> {
+            this.toastr.error(error.message);
+          }
+
+
+      );
+
     }
 
 

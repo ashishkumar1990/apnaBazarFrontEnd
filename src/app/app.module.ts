@@ -19,6 +19,7 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { FooterComponent } from './shared/footer/footer.component';
 
 
+import { ToastrModule } from 'ngx-toastr';
 import { HomeModule } from './home/home.module';
 
 @NgModule({
@@ -40,7 +41,12 @@ import { HomeModule } from './home/home.module';
         AppRoutingModule,
         HomeModule,
         AppMaterialDesignModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        ToastrModule.forRoot({
+            timeOut: 5000,
+            positionClass: 'toast-bottom-right',
+            preventDuplicates: true,
+        })
     ],
     providers: [],
     bootstrap: [AppComponent]

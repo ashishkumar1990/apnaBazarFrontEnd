@@ -58,7 +58,7 @@ export class NavbarComponent implements OnInit {
     //}
     isLogin() {
         var title = this.location.prepareExternalUrl(this.location.path());
-        if( title === '/login'||title === '/signup' ) {
+        if( title === '/apnaBazar/login'||title === '/apnaBazar/signup' ) {
             return true;
         }
         else {

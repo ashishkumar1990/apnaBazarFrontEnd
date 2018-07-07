@@ -1,0 +1,148 @@
+.blocks-promo  {
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1280px;
+  margin-top: 20px;
+  width: auto;
+  margin-bottom: 16px;
+}
+
+.home-main  {
+  height: 450px;
+  max-width: 1280px;
+
+}
+.content {
+  display: block;
+  box-sizing: border-box;
+  z-index: 1;
+  overflow: hidden;
+  padding: 25px 35px 35px;
+}
+.bg-white{
+  top: 136px;
+  right: 136px;
+  width: 547px;
+  background-color: rgba(255,255,255,0.9);
+  position: absolute;
+}
+
+.info {
+  display: block;
+  font-weight: 300;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.title {
+  display: block;
+  font-size: 2.2rem;
+  line-height: 1.2;
+  margin-bottom: 15px;
+}
+
+.home-pants {
+  border-right: 8px solid #fff;
+  float: left;
+  height: 661px;
+  width: 33.3%;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  display: block;
+  color: #333 !important;
+}
+
+.home-pants-image {
+  max-width: none;
+  border: 0;
+  height: 660px;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  display: block;
+  width: 100%;
+  color: #333 !important;
+}
+.home-pants-span{
+  top: 0;left: 0;width: 80%;
+  background-color: transparent;
+  position: absolute;
+}
+
+.home-t-shirts{
+  display: table;
+  width: 66.7%;
+  background: #ffdd16;
+  height: 276px;
+}
+.home-t-shirts-image {
+  width: 60%;
+  vertical-align: middle;
+  padding-left: 10px;
+}
+.home-t-shirts-content{
+  width: 386px;
+  float: right;
+}
+.home-erin {
+  border-right: 8px solid #fff;
+  float: left;
+  width: 33.3%;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  display: block;
+  color: #333 !important;
+}
+
+.home-erin-image {
+  max-width: none;
+  border: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  display: block;
+  width: 100%;
+  color: #333 !important;
+}
+
+.home-erin-span{
+  top: 0;left: 124px;width: 80%;
+  background-color: transparent;
+  position: absolute;
+  margin-top: -32px;
+}
+.home-performance {
+  overflow: hidden;
+  position: relative;
+  display: block;
+  color: #333 !important;
+  float: right;
+}
+.bg-white-home-performance {
+  top: 7px;
+  width: 80%;
+  left:34px;
+  position: absolute;
+  padding: 0px 35px 35px;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+.home-eco {
+  position: relative;
+}
+.home-eco-image {
+  max-width: 844px;
+  height: 283px;
+}
+.bg-white-home-eco {
+  top: -90px;
+  left: 200px;
+  width: 70%;
+  position: absolute;
+  padding: 0px 35px 35px;
+  background-color: rgba(255, 255, 255, 0.9);
+}

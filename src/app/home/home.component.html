@@ -1,203 +1,99 @@
-<div class="wrapper"  *ngIf="categories && categories.length>0">
-    <nav class="navbar navbar-expand-md bg-primary">
-        <a href="http://localhost:4200/home"> <img
-                style="height:60px;display: block;margin-left: 38px;margin-right: 30px;cursor: pointer;"
-                src='../assets/img/apna-bazar-green-logo.png'/> </a>
 
-        <div class="collapse navbar-collapse" id="navbar-menu">
-            <ul class="navbar-nav mr-auto">
-                <div class="nav-item dropdown" *ngFor="let category of categories">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="dropdownMenuButton" href="#pk"
-                       role="button" aria-haspopup="true" aria-expanded="false"
-                       style="white-space: nowrap;color: #66615B;">{{category.name}}</a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <div *ngFor="let subCategory of category.children_data">
-                            <a class="dropdown-item">{{subCategory.name}}</a>
-                            <div class="dropdown-divider"></div>
-                        </div>
-                    </ul>
+<div style="min-height: 2382px"  class="wrapper" *ngIf=" homePageProducts && homePageProducts.length>0">
 
-                </div>
-            </ul>
+    <div class="blocks-promo">
+        <a class=" home-main">
+            <img src="http://localhost/apnaBazar/pub/media/wysiwyg/home/home-main.jpg" alt=""/>
+       <span class="content bg-white">
+           <span class="info">New Luma Yoga Collection</span>
+           <span><strong class="title">Get fit and look fab in new seasonal styles </strong></span>
+           <span class="label label-primary">Shop New Yoga</span>
+       </span>
+        </a>
+    </div>
+    <div class="blocks-promo">
+        <a class=" home-pants">
+            <img class="home-pants-image" src="http://localhost/apnaBazar/pub/media/wysiwyg/home/home-pants.jpg"
+                 alt=""/>
+           <span class="content home-pants-span">
+               <strong class="title">20% OFF</strong>
+               <span class="info">Luma pants when you shop today*</span>
+               <span class="label label-default">Shop Pants</span>
+           </span>
+        </a>
+
+        <a class=" home-t-shirts">
+            <span class="home-t-shirts-image">
+                <img style="margin-top: 30px" src="http://localhost/apnaBazar/pub/media/wysiwyg/home/home-t-shirts.png" alt=""/></span>
+    <span class="content home-t-shirts-content">
+    <strong class="title">Even more ways to mix and match</strong>
+    <span class="info">Buy 3 Luma tees get a 4th free</span>
+    <span class="label label-default">Shop Tees</span>
+    </span>
+        </a>
+
+    </div>
+    <div class="blocks-promo">
+        <a class=" home-erin">
+            <img class="home-erin-image" src="http://localhost/apnaBazar/pub/media/wysiwyg/home/home-erin.jpg" alt=""/>
+           <span class="content home-erin-span">
+               <strong class="title">Take it from Erin</strong>
+               <span class="info">Luma founder Erin Renny shares her favorites!</span>
+               <span class="label label-warning">Shop Erin Recommends</span>
+           </span>
+        </a>
+        <a class=" home-performance">
+            <img  src="http://localhost/apnaBazar/pub/media/wysiwyg/home/home-performance.jpg" alt=""/>
+           <span class="content bg-white-home-performance">
+               <strong class="title">Science meets performance</strong>
+               <span class="info">Wicking to raingear, Luma covers&nbsp;you</span>
+               <span class="label label-danger">Shop Performance</span>
+           </span>
+        </a>
+        <a class=" home-eco">
+            <img class="home-eco-image" src="http://localhost/apnaBazar/pub/media/wysiwyg/home/home-eco.jpg" alt=""/>
+            <span class="content bg-white-home-eco">
+            <strong class="title">Twice around, twice as nice</strong>
+            <span class="info">Find conscientious, comfy clothing in our eco-friendly collection</span>
+            <span class="label label-success">Shop Eco-Friendly</span>
+            </span>
+        </a>
+
+    </div>
+
+    <div class="blocks-promo" style=" text-align: center;">
+        <h2>Hot Sellers</h2>
+
+        <p>Here is what`s trending on Apna Bazar right now</p>
+        <div class="dropdown-divider"></div>
+    </div>
+
+    <div class="blocks-promo">
+        <div class="col-sm-12 form-row">
+            <div class="blocks-promo  card col-sm-2" *ngFor="let homePageProduct of homePageProducts">
+                    <span>
+                        <img style="height:280px;" class="home-erin-image"
+                             src="http://localhost/apnaBazar/pub/media/catalog/product{{homePageProduct.image}}"
+                             alt=""/>
+                    </span>
+                <strong  style=" text-align: center;">
+                        {{homePageProduct.name}}
+                    </strong>
+                     <strong  style=" text-align: center;">
+                         {{homePageProduct.price | currency:"&#8377;"}}
+                    </strong>
+                <span class="label label-info" style="margin: auto;margin-bottom: 10px;">add to Cart</span>
+            </div>
+
         </div>
-        <div class="collapse navbar-collapse" id="navbar-primary">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i aria-hidden="true" class="fa fa-facebook-official"></i></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i aria-hidden="true" class="fa fa-twitter"></i></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i aria-hidden="true" class="fa fa-google-plus"></i></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i aria-hidden="true" class="fa fa-instagram"></i></a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <!--<ng-container *ngFor="let cat of categories">-->
-        <!--<div class="list-athletes">-->
-            <!--<div class="list-athletes-details">-->
-                <!--<p>{{ cat.name }}</p>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</ng-container>-->
-    <!--<div class="page-header" style="background-image: url('assets/img/antoine-barres.jpg')">-->
-        <!--<div class="filter"></div>-->
-       <!-- -->
-    <!--</div>-->
-    <!--<div class="main">-->
-        <!--&lt;!&ndash;<app-components></app-components>&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="section section-dark section-nucleo-icons">&ndash;&gt;-->
-            <!--&lt;!&ndash;<div class="container">&ndash;&gt;-->
-                <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
-                    <!--&lt;!&ndash;<div class="col-lg-6 col-md-12">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<h2 class="title">Nucleo Icons</h2><br/>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<p class="description">&ndash;&gt;-->
-                            <!--&lt;!&ndash;Now UI Kit comes with 100 custom icons made by our friends from NucleoApp. The official package contains over 2.100 thin icons which are looking great in combination with Now UI Kit Make sure you check all of them and use those that you like the most.&ndash;&gt;-->
-                        <!--&lt;!&ndash;</p><br/>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<a [routerLink]="['/nucleoicons']" class="btn btn-danger btn-round">View Demo Icons</a>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<a href="https://nucleoapp.com/?ref=1712" class="btn btn-outline-danger btn-round" target="_blank">View All Icons</a>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
-                    <!--&lt;!&ndash;<div class="col-lg-6 col-md-12">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<div class="icons-container">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<i class="nc-icon nc-time-alarm"></i>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<i class="nc-icon nc-atom"></i>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<i class="nc-icon nc-camera-compact"></i>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<i class="nc-icon nc-watch-time"></i>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<i class="nc-icon nc-key-25"></i>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<i class="nc-icon nc-diamond"></i>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<i class="nc-icon nc-user-run"></i>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<i class="nc-icon nc-layout-11"></i>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<i class="nc-icon nc-badge"></i>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<i class="nc-icon nc-bulb-63"></i>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<i class="nc-icon nc-favourite-28"></i>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<i class="nc-icon nc-planet"></i>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<i class="nc-icon nc-tie-bow"></i>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<i class="nc-icon nc-zoom-split"></i>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<i class="nc-icon nc-cloud-download-93"></i>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="section section-dark">&ndash;&gt;-->
-            <!--&lt;!&ndash;<div class="container">&ndash;&gt;-->
-                <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
-                    <!--&lt;!&ndash;<div class="col-md-8 ml-auto mr-auto text-center">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<h2 class="title">Completed with examples</h2>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<p class="description">The kit comes with three pre-built pages to help you get started faster. You can change the text and images and you're good to go. More importantly, looking at them will give you a picture of what you can built with this powerful kit.</p>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="section section-image section-login" style="background-image: url('assets/img/login-image.jpg');">&ndash;&gt;-->
-            <!--&lt;!&ndash;<div class="container">&ndash;&gt;-->
-                <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
-                    <!--&lt;!&ndash;<div class="col-lg-4 col-md-6 col-sm-12 ml-auto mr-auto">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<div class="card card-register">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<h3 class="title">Welcome</h3>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<div class="social-line text-center">&ndash;&gt;-->
-                                <!--&lt;!&ndash;<a href="#pablo" class="btn btn-neutral btn-facebook btn-just-icon">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<i class="fa fa-facebook-square"></i>&ndash;&gt;-->
-                                <!--&lt;!&ndash;</a>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<a href="#pablo" class="btn btn-neutral btn-google btn-just-icon">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<i class="fa fa-google-plus"></i>&ndash;&gt;-->
-                                <!--&lt;!&ndash;</a>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<a href="#pablo" class="btn btn-neutral btn-twitter btn-just-icon">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<i class="fa fa-twitter"></i>&ndash;&gt;-->
-                                <!--&lt;!&ndash;</a>&ndash;&gt;-->
-                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<form class="register-form">&ndash;&gt;-->
-                                <!--&lt;!&ndash;<label>Email</label>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<div class="input-group form-group-no-border">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<span class="input-group-addon">&ndash;&gt;-->
-                                        <!--&lt;!&ndash;<i class="nc-icon nc-email-85"></i>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;</span>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<input type="text" class="form-control" placeholder="Email">&ndash;&gt;-->
-                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    </div>
 
-                                <!--&lt;!&ndash;<label>Password</label>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<div class="input-group form-group-no-border">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<span class="input-group-addon">&ndash;&gt;-->
-                                        <!--&lt;!&ndash;<i class="nc-icon nc-key-25"></i>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;</span>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<input type="text" class="form-control" placeholder="Password">&ndash;&gt;-->
-                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<button class="btn btn-danger btn-block btn-round">Register</button>&ndash;&gt;-->
-                            <!--&lt;!&ndash;</form>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<div class="forgot">&ndash;&gt;-->
-                                <!--&lt;!&ndash;<a href="#" class="btn btn-link btn-danger">Forgot password?</a>&ndash;&gt;-->
-                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<div class="col text-center" routerLinkActive="active">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<a [routerLink]="['/signup']" class="btn btn-outline-neutral btn-round btn-lg">View Register Page</a>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="section section-dark">&ndash;&gt;-->
-            <!--&lt;!&ndash;<div class="container">&ndash;&gt;-->
-                <!--&lt;!&ndash;<div class="row example-page">&ndash;&gt;-->
-                    <!--&lt;!&ndash;<div class="col-md-6 text-center" routerLinkActive="active">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<a [routerLink]="['/landing']">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<img src="../../assets/img/examples/landing-page.JPG" alt="Rounded Image" class="img-rounded img-responsive" style="width: 100%">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<a [routerLink]="['/landing']" class="btn btn-outline-neutral btn-round">Landing Page</a>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</a>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
-                    <!--&lt;!&ndash;<div class="col-md-6 text-center" routerLinkActive="active">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<a [routerLink]="['/user-profile']">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<img src="../../assets/img/examples/profile-page.JPG" alt="Rounded Image" class="img-rounded img-responsive" style="width: 100%">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<a [routerLink]="['/user-profile']" class="btn btn-outline-neutral btn-round">Profile Page</a>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</a>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="section">&ndash;&gt;-->
-            <!--&lt;!&ndash;<div class="container text-center">&ndash;&gt;-->
-                <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
-                    <!--&lt;!&ndash;<div class="col-md-8 ml-auto mr-auto text-center">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<h2 class="title">Do you like what you see?</h2>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<p class="description">Cause if you do, it can be yours for Free. Hit the button below and download it. Start a new project or give an old Bootstrap 4 project a new look.</p>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
-                    <!--&lt;!&ndash;<div class="col-md-6 download-area ml-auto mr-auto">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<a href="https://www.creative-tim.com/product/paper-kit-2" class="btn btn-warning btn-round">Download free HTML</a>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<a href="https://www.creative-tim.com/product/paper-kit-2-angular" class="btn btn-danger btn-round">Download free Angular</a>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                <!--&lt;!&ndash;<div class="row justify-content-md-center sharing-area text-center">&ndash;&gt;-->
-                    <!--&lt;!&ndash;<div class="text-center col-md-12 col-lg-8">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<h3>Thank you for supporting us!</h3>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<div class="text-center col-md-12 col-lg-8">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<a href="#pablo" class="btn btn-twitter-bg twitter-sharrre btn-round" rel="tooltip" title="Tweet!">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<i class="fa fa-twitter"></i> Twitter&ndash;&gt;-->
-                        <!--&lt;!&ndash;</a>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<a href="#pablo" class="btn btn-google-bg linkedin-sharrre btn-round" rel="tooltip" title="Share!">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<i class="fa fa-google-plus"></i> Google&ndash;&gt;-->
-                        <!--&lt;!&ndash;</a>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<a href="#pablo" class="btn btn-facebook-bg facebook-sharrre btn-round" rel="tooltip" title="Share!">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<i class="fa fa-facebook-square"></i> Facebook&ndash;&gt;-->
-                        <!--&lt;!&ndash;</a>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<a href="https://github.com/creativetimofficial/paper-kit" class="btn btn-github-bg btn-github sharrre btn-round" rel="tooltip" title="Star on Github">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<i class="fa fa-github"></i> Star&ndash;&gt;-->
-                        <!--&lt;!&ndash;</a>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-    <!--</div>-->
+
 </div>
 
-<div class="wrapper" style="height: 700px;padding-top: 25%; margin:0 auto;" *ngIf="!categories">
+<div class="wrapper" style="height: 700px;padding-top: 25%; margin:0 auto;" *ngIf="loadHomePageProducts && !homePageProducts">
     <mat-spinner strokeWidth="3" [diameter]="50" mode='indeterminate' style="margin:0 auto;stroke: #673ab7;" ></mat-spinner>
-<span style="margin-left: 46%;">{{loadCategories}}</span>
+    <span style="margin-left: 46%;">{{loadHomePageProducts}}</span>
 </div>

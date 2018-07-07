@@ -1,0 +1,45 @@
+<div class="wrapper"  *ngIf="isCategoryNavBarExists()&& categories && categories.length>0">
+    <nav class="navbar navbar-expand-md bg-primary">
+        <a href="http://localhost:4200/home"> <img
+                style="height:60px;display: block;margin-left: 38px;margin-right: 30px;cursor: pointer;"
+                src='../assets/img/apna-bazar-green-logo.png'/> </a>
+
+        <div class="collapse navbar-collapse" id="navbar-menu">
+            <ul class="navbar-nav mr-auto">
+                <div class="nav-item dropdown" *ngFor="let category of categories">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="dropdownMenuButton" href="#pk"
+                       role="button" aria-haspopup="true" aria-expanded="false"
+                       style="white-space: nowrap;color: #66615B;">{{category.name}}</a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <div *ngFor="let subCategory of category.children_data">
+                            <a class="dropdown-item">{{subCategory.name}}</a>
+                            <div class="dropdown-divider"></div>
+                        </div>
+                    </ul>
+
+                </div>
+            </ul>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-primary">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i aria-hidden="true" class="fa fa-facebook-official"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i aria-hidden="true" class="fa fa-twitter"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i aria-hidden="true" class="fa fa-google-plus"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i aria-hidden="true" class="fa fa-instagram"></i></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div class="wrapper" style="height: 700px;padding-top: 25%; margin:0 auto;" *ngIf="loadCategories && !categories">
+    <mat-spinner strokeWidth="3" [diameter]="50" mode='indeterminate' style="margin:0 auto;stroke: #673ab7;" ></mat-spinner>
+    <span style="margin-left: 46%;">{{loadCategories}}</span>
+</div>

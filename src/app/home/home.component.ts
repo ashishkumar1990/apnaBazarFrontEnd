@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from './home.service';
 import { ToastrService } from 'ngx-toastr';
+import * as _ from 'underscore';
 
 @Component({
     selector: 'app-home',
@@ -11,22 +12,28 @@ import { ToastrService } from 'ngx-toastr';
 })
 
 export class HomeComponent implements OnInit {
-    categories: any;
-    loadCategories:string="Loading Categories...";
+    homePageProducts: any;
+    loadHomePageProducts:string="Loading HomePage...";
     constructor(private _homeService: HomeService,private toastr: ToastrService) {
     }
 
     ngOnInit() {
-        this._homeService.getCategories()
+        this._homeService.getHomeProducts()
             .subscribe(
-                categories => {
-                this.categories = categories.children_data;
-                this.toastr.success("Categories Loaded Successfully");
+                homePageProducts => {
+                    this.homePageProducts= _.each(homePageProducts.items, function (homePageProduct) {
+                       let image= _.findWhere(homePageProduct.custom_attributes, {attribute_code: "small_image"});
+                        if(image){
+                            homePageProduct.image=image.value;
+                        }
+                    });
+                this.toastr.success("Home Page Loaded Successfully");
                 //this._router.navigate(['Home']);
             },
                 error=> {
-                this.categories =[];
-                this.toastr.error(error.message);
+                    this.homePageProducts = [];
+                    this.loadHomePageProducts = "";
+                    this.toastr.error(error.message);
             }
 
 

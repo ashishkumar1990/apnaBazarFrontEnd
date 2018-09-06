@@ -1,0 +1,99 @@
+
+<!--<div style="min-height: 2382px"  class="wrapper" *ngIf=" homePageProducts && homePageProducts.length>0">-->
+
+    <!--<div class="blocks-promo">-->
+        <!--<a class=" home-main">-->
+            <!--<img src="http://localhost/apnaBazar/pub/media/wysiwyg/home/home-main.jpg" alt=""/>-->
+       <!--<span class="content bg-white">-->
+           <!--<span class="info">New Luma Yoga Collection</span>-->
+           <!--<span><strong class="title">Get fit and look fab in new seasonal styles </strong></span>-->
+           <!--<span class="label label-primary">Shop New Yoga</span>-->
+       <!--</span>-->
+        <!--</a>-->
+    <!--</div>-->
+    <!--<div class="blocks-promo">-->
+        <!--<a class=" home-pants">-->
+            <!--<img class="home-pants-image" src="http://localhost/apnaBazar/pub/media/wysiwyg/home/home-pants.jpg"-->
+                 <!--alt=""/>-->
+           <!--<span class="content home-pants-span">-->
+               <!--<strong class="title">20% OFF</strong>-->
+               <!--<span class="info">Luma pants when you shop today*</span>-->
+               <!--<span class="label label-default">Shop Pants</span>-->
+           <!--</span>-->
+        <!--</a>-->
+
+        <!--<a class=" home-t-shirts">-->
+            <!--<span class="home-t-shirts-image">-->
+                <!--<img style="margin-top: 30px" src="http://localhost/apnaBazar/pub/media/wysiwyg/home/home-t-shirts.png" alt=""/></span>-->
+    <!--<span class="content home-t-shirts-content">-->
+    <!--<strong class="title">Even more ways to mix and match</strong>-->
+    <!--<span class="info">Buy 3 Luma tees get a 4th free</span>-->
+    <!--<span class="label label-default">Shop Tees</span>-->
+    <!--</span>-->
+        <!--</a>-->
+
+    <!--</div>-->
+    <!--<div class="blocks-promo">-->
+        <!--<a class=" home-erin">-->
+            <!--<img class="home-erin-image" src="http://localhost/apnaBazar/pub/media/wysiwyg/home/home-erin.jpg" alt=""/>-->
+           <!--<span class="content home-erin-span">-->
+               <!--<strong class="title">Take it from Erin</strong>-->
+               <!--<span class="info">Luma founder Erin Renny shares her favorites!</span>-->
+               <!--<span class="label label-warning">Shop Erin Recommends</span>-->
+           <!--</span>-->
+        <!--</a>-->
+        <!--<a class=" home-performance">-->
+            <!--<img  src="http://localhost/apnaBazar/pub/media/wysiwyg/home/home-performance.jpg" alt=""/>-->
+           <!--<span class="content bg-white-home-performance">-->
+               <!--<strong class="title">Science meets performance</strong>-->
+               <!--<span class="info">Wicking to raingear, Luma covers&nbsp;you</span>-->
+               <!--<span class="label label-danger">Shop Performance</span>-->
+           <!--</span>-->
+        <!--</a>-->
+        <!--<a class=" home-eco">-->
+            <!--<img class="home-eco-image" src="http://localhost/apnaBazar/pub/media/wysiwyg/home/home-eco.jpg" alt=""/>-->
+            <!--<span class="content bg-white-home-eco">-->
+            <!--<strong class="title">Twice around, twice as nice</strong>-->
+            <!--<span class="info">Find conscientious, comfy clothing in our eco-friendly collection</span>-->
+            <!--<span class="label label-success">Shop Eco-Friendly</span>-->
+            <!--</span>-->
+        <!--</a>-->
+
+    <!--</div>-->
+
+    <!--<div class="blocks-promo" style=" text-align: center;">-->
+        <!--<h2>Hot Sellers</h2>-->
+
+        <!--<p>Here is what`s trending on Apna Bazar right now</p>-->
+        <!--<div class="dropdown-divider"></div>-->
+    <!--</div>-->
+
+    <!--<div class="blocks-promo">-->
+        <!--<div class="col-sm-12 form-row">-->
+            <!--<div class="blocks-promo  card col-sm-2" *ngFor="let homePageProduct of homePageProducts">-->
+                    <!--<span>-->
+                        <!--<img style="height:280px;" class="home-erin-image"-->
+                             <!--src="http://localhost/apnaBazar/pub/media/catalog/product{{homePageProduct.image}}"-->
+                             <!--alt=""/>-->
+                    <!--</span>-->
+                <!--<strong  style=" text-align: center;">-->
+                        <!--{{homePageProduct.name}}-->
+                    <!--</strong>-->
+                     <!--<strong  style=" text-align: center;">-->
+                         <!--{{homePageProduct.price | currency:"&#8377;"}}-->
+                    <!--</strong>-->
+                <!--<span class="label label-info" style="margin: auto;margin-bottom: 10px;">add to Cart</span>-->
+            <!--</div>-->
+
+        <!--</div>-->
+
+    <!--</div>-->
+
+
+
+<!--</div>-->
+
+<!--<div class="wrapper" style="height: 700px;padding-top: 25%; margin:0 auto;" *ngIf="loadHomePageProducts && !homePageProducts">-->
+    <!--<mat-spinner strokeWidth="3" [diameter]="50" mode='indeterminate' style="margin:0 auto;stroke: #673ab7;" ></mat-spinner>-->
+    <!--<span style="margin-left: 46%;">{{loadHomePageProducts}}</span>-->
+<!--</div>-->

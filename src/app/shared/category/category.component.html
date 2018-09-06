@@ -12,7 +12,7 @@
                        style="white-space: nowrap;color: #66615B;">{{category.name}}</a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <div *ngFor="let subCategory of category.children_data">
-                            <a class="dropdown-item">{{subCategory.name}}</a>
+                            <a (click)="getCategoryProducts(subCategory)" class="dropdown-item" style="cursor: pointer;">{{subCategory.name}}</a>
                             <div class="dropdown-divider"></div>
                         </div>
                     </ul>

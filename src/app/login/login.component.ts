@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'
+
 
 //declare const FB:any;
 @Component({
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-    constructor() {
+    constructor(private _router:Router) {
         //FB.init({
         //    appId      : '197240367495969',
         //    cookie     : false,  // enable cookies to allow the server to access
@@ -47,5 +49,8 @@ export class LoginComponent implements OnInit {
         //});
     }
 
-
+    loadHomePage() {
+        this._router.navigate(['home']);
+        // this._router.navigateByUrl('/home');
+    }
 }

@@ -8,7 +8,7 @@ import { RouterModule,Routes } from '@angular/router';
 import { AppMaterialDesignModule } from '../app.material';
 
 
-import { HomeComponent } from './home.component';
+import { ProductsComponent } from './products.component';
 
 import { ComponentsModule } from '../components/components.module';
 
@@ -23,8 +23,8 @@ import { ComponentsModule } from '../components/components.module';
         ComponentsModule,
         AppMaterialDesignModule
     ],
-    declarations: [ HomeComponent ],
-    exports:[ HomeComponent ],
+    declarations: [ ProductsComponent ],
+    exports:[ ProductsComponent ],
     providers: []
 })
-export class HomeModule { }
+export class ProductsModule { }

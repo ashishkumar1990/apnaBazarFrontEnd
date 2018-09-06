@@ -22,6 +22,7 @@ import { CategoryComponent } from './shared/category/category.component';
 
 import { ToastrModule } from 'ngx-toastr';
 import { HomeModule } from './home/home.module';
+import { ProductsModule } from './products/products.module';
 
 @NgModule({
     declarations: [
@@ -42,6 +43,7 @@ import { HomeModule } from './home/home.module';
         RouterModule,
         AppRoutingModule,
         HomeModule,
+        ProductsModule,
         AppMaterialDesignModule,
         ReactiveFormsModule,
         ToastrModule.forRoot({

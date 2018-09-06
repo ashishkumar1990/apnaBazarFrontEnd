@@ -1,7 +1,9 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { CategoryService } from './category.service';
+import { Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr';
+import * as _ from 'underscore';
 
 @Component({
     selector: 'app-category',
@@ -12,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 export class CategoryComponent implements OnInit {
     categories: any;
     loadCategories:string="Loading Categories...";
-    constructor(private _categoryService: CategoryService,private toastr: ToastrService,public location: Location, private element : ElementRef) {
+    constructor(private _categoryService: CategoryService,private toastr: ToastrService,public location: Location,private _router:Router) {
     }
 
     ngOnInit() {
@@ -25,7 +27,13 @@ export class CategoryComponent implements OnInit {
             this._categoryService.getCategories()
                 .subscribe(
                     categories => {
-                    this.categories = categories.children_data;
+                        let categoriesData = categories.children_data;
+                        this.categories = _.filter(categoriesData, function (category) {
+                            if (category.children_data && category.children_data.length > 0) {
+                                return category;
+                            }
+                        });
+                        this.loadCategories="";
                     this.toastr.success("Categories Loaded Successfully");
                     //this._router.navigate(['Home']);
                 },
@@ -49,6 +57,10 @@ export class CategoryComponent implements OnInit {
         else {
             return true;
         }
+    }
+
+    getCategoryProducts(subCategory) {
+         this._router.navigateByUrl(`category-id/${subCategory.id}/products`);
     }
 
 

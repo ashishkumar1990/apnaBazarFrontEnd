@@ -15,7 +15,6 @@ import { SignupComponent } from './signup/signup.component';
 import { LandingComponent } from './landing/landing.component';
 import { ProfileComponent } from './profile/profile.component';
 import { HomeComponent } from './home/home.component';
-import { NavbarComponent } from './shared/navbar/navbar.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { CategoryComponent } from './shared/category/category.component';
 
@@ -31,7 +30,6 @@ import { ProductsModule } from './products/products.module';
         SignupComponent,
         LandingComponent,
         ProfileComponent,
-        NavbarComponent,
         FooterComponent,
         CategoryComponent
     ],

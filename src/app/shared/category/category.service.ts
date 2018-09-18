@@ -9,7 +9,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/Observable/throw';
 @Injectable()
 export class CategoryService {
-    private _categoryurl = 'http://localhost/apnaBazar/rest/V1/categories?fields=children_data[id,parent_id,name,is_active,position,level,children_data[id,parent_id,name,is_active,position,level]]';
+    private _categoryurl = 'http://localhost/apnaBazar/rest/V1/categories';
     constructor(private _http: Http){}
 
     getCategories() {

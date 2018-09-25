@@ -37,6 +37,18 @@ export class ProductsService {
             .catch(this.handleError);
     }
 
+    getCategoryProductsPath(categoryId) {
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            'Accept'      : 'application/json',
+        });
+        this. _attributesUrl = 'http://localhost/apnaBazar/rest/V1/categories/' + categoryId+'?fields=path,name';
+        let options = new RequestOptions({headers: headers});
+        return this._http.get(this._attributesUrl,options)
+            .map((response: Response) =>response.json())
+            .catch(this.handleError);
+    }
+
     private handleError(error: Response) {
         //console.error(error);
         return Observable.throw(error.json());

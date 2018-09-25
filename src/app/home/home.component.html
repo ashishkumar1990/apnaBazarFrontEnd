@@ -1,4 +1,4 @@
-<div style="min-height: 2382px"  class="wrapper" *ngIf=" homePageProducts && homePageProducts.length>0">
+<div style="min-height: 2382px"  class="wrapper" *ngIf=" (categories && categories.length>0)&& (homePageProducts && homePageProducts.length>0)">
 
     <div class="blocks-promo">
         <a class=" home-main">
@@ -92,7 +92,7 @@
 
 </div>
 
-<div class="wrapper" style="height: 700px;padding-top: 25%; margin:0 auto;" *ngIf="loadHomePageProducts && !homePageProducts">
+<div class="wrapper" style="height: 650px;padding-top: 25%; margin:0 auto;" *ngIf="(categories && categories.length>0) && (loadHomePageProducts && !homePageProducts)">
     <mat-spinner strokeWidth="3" [diameter]="50" mode='indeterminate' style="margin:0 auto;stroke: #673ab7;" ></mat-spinner>
     <span style="margin-left: 46%;">{{loadHomePageProducts}}</span>
 </div>

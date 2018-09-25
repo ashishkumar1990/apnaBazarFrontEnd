@@ -3,6 +3,7 @@ import { Location, LocationStrategy, PathLocationStrategy } from '@angular/commo
 import { CategoryService } from './category.service';
 import { Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr';
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 import * as _ from 'underscore';
 
 @Component({
@@ -15,7 +16,7 @@ export class CategoryComponent implements OnInit {
     categories: any;
     loadCategories:string="";
     loadProducts:string="";
-    constructor(private _categoryService: CategoryService,private toastr: ToastrService,public location: Location,private _router:Router) {
+    constructor(private _categoryService: CategoryService,private toastr: ToastrService,public location: Location,private _router:Router,private _cookie:CookieService) {
     }
 
     ngOnInit() {
@@ -30,6 +31,11 @@ export class CategoryComponent implements OnInit {
         else {
             if (!this.categories && !this.loadCategories) {
                 this.loadCategories = "Loading Categories...";
+                let previousUrl = this._cookie.get('previousUrl');
+                if (previousUrl === "apnaBazar/home") {
+                    this._cookie.put('previousUrl', "apnaBazar/category");
+                    this._router.navigate(['/category']);
+                }
                 this.getAllCategories();
             }
             return true;
@@ -49,7 +55,10 @@ export class CategoryComponent implements OnInit {
                     this.toastr.success("Categories Loaded Successfully");
                     this._categoryService.setValue(categoriesData);
                     this.categories = this._categoryService.getValue();
-                    this._router.navigate(['/home']);
+                    let previousUrl=  this._cookie.get('previousUrl');
+                    if (previousUrl === "apnaBazar/category") {
+                        this._router.navigate(['/home']);
+                    }
                 },
                 error => {
                     this.categories = [];

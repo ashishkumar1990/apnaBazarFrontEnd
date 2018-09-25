@@ -22,6 +22,7 @@ import { CategoryComponent } from './shared/category/category.component';
 import { ToastrModule } from 'ngx-toastr';
 import { HomeModule } from './home/home.module';
 import { ProductsModule } from './products/products.module';
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 @NgModule({
     declarations: [
@@ -50,7 +51,7 @@ import { ProductsModule } from './products/products.module';
             preventDuplicates: true,
         })
     ],
-    providers: [],
+    providers: [CookieService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

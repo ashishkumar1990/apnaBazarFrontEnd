@@ -5,6 +5,8 @@ import 'rxjs/add/operator/filter';
 import { DOCUMENT } from '@angular/platform-browser';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { CategoryService } from './shared/category/category.service';
+import { CookieService } from 'angular2-cookie/services/cookies.service';
+
 
 
 
@@ -12,13 +14,16 @@ import { CategoryService } from './shared/category/category.service';
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    providers: [CategoryService]
+    providers: [CategoryService,CookieService]
 })
 export class AppComponent implements OnInit {
     private _router: Subscription;
-    constructor( private renderer : Renderer, private router: Router, @Inject(DOCUMENT,) private document: any, private element : ElementRef, public location: Location,private _categoryService:CategoryService) {}
+    constructor( private renderer : Renderer, private router: Router, @Inject(DOCUMENT,) private document: any, private element : ElementRef, public location: Location,private _categoryService:CategoryService,private _cookie:CookieService) {}
 
     ngOnInit() {
+        let previousUrl = this.location.prepareExternalUrl(this.location.path());
+        previousUrl = previousUrl.slice(1);
+        this._cookie.put('previousUrl', previousUrl);
 
         // var navbar : HTMLElement = this.element.nativeElement.children[0].children[0];
         this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {

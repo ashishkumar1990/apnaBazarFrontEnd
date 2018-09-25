@@ -1,4 +1,20 @@
 <div class=" col-sm-12 form-row" [hidden]="loadProducts" style="margin-top: 20px">
+    <div class=" col-sm-1 form-row"></div>
+    <div *ngFor="let p of path">
+        <a style="cursor: pointer;">
+            <b><span>{{p}}</span></b>
+            <span *ngIf="p!==currentCategoryName" style=" width: 32px;display: inline-block;text-align: center;">
+                 >
+            </span>
+        </a>
+    </div>
+</div>
+<div class=" col-sm-12 form-row" [hidden]="loadProducts" style="margin-top: 20px">
+    <div class=" col-sm-1 form-row"></div>
+    <span  style="color:#2F4F4F ;font-size: 40px; font-weight: 400; "> {{currentCategoryName}}</span>
+</div>
+<div class=" col-sm-12 form-row" [hidden]="loadProducts" style="margin-top: 20px">
+    <div class=" col-sm-1 form-row"></div>
     <div class=" col-sm-2 form-row" *ngIf="filters && filters.length>0">
         <div>
             <mat-card-title style="color:#2F4F4F "> Shopping Options</mat-card-title>
@@ -20,7 +36,7 @@
         </div>
     </div>
 
-    <div class=" col-sm-10 form-row">
+    <div class=" col-sm-9 form-row">
         <div class="row col-sm-3" *ngFor="let product of categoryProducts"
              style="width: 425px;padding-left: 20px;padding-right: 20px ;cursor:pointer">
             <div class="card" (click)="populateProducts(product)">
@@ -58,7 +74,7 @@
         </div>
     </div>
 </div>
-<div class="wrapper" style="height: 700px;padding-top: 25%; margin:0 auto;" *ngIf="loadProducts">
+<div class="wrapper" style="height: 650px;padding-top: 25%; margin:0 auto;" *ngIf="loadProducts">
     <mat-spinner strokeWidth="3" [diameter]="50" mode='indeterminate'
                  style="margin:0 auto;stroke: #673ab7;"></mat-spinner>
     <span style="margin-left: 46%;">{{loadProducts}}</span>

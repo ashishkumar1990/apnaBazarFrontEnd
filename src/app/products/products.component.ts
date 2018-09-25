@@ -14,6 +14,8 @@ import * as _ from 'underscore';
 })
 
 export class ProductsComponent implements OnInit {
+    path:any  = [];
+    currentCategoryName:string;
     products: any;
     categoryProducts: any = [];
     product: { filter: '' };
@@ -41,6 +43,7 @@ export class ProductsComponent implements OnInit {
                         this.resetProducts();
                         if (!products.items) {
                             this.toastr.success("No items found in that category");
+                            this.loadProducts = "";
                             return;
                         }
                         _.each(products.items, function (item) {
@@ -163,9 +166,53 @@ export class ProductsComponent implements OnInit {
 
                                     });
                                     this.allProducts = Object.assign([], $this.products);
-                                    this.toastr.success("Filter loaded successfully");
-                                    this.toastr.success("Category products loaded successfully");
-                                    this.loadProducts = "";
+                                    $this.categories = this._categoryService.getValue();
+                                    if ($this.categories && $this.categories.length > 0) {
+                                        $this.path=[];
+                                        $this.currentCategoryName="";
+                                        this._productsService.getCategoryProductsPath(routeParams.categoryId).subscribe(
+                                            data => {
+                                                 let pathValues = data.path.split("/");
+                                                 $this.path.push("Home");
+                                                $this.currentCategoryName =  data.name;
+                                                 let categoryChildren,subChildren;
+                                                _.each(pathValues, function (pathValue) {
+                                                    if (pathValue === "1" || pathValue === "2") {
+                                                        return;
+                                                    }
+
+                                                    let category = _.findWhere($this.categories, {'id': Number(pathValue)});
+                                                    if (category) {
+                                                        $this.path.push(category.name);
+                                                        if (category.children_data.length > 0) {
+                                                            categoryChildren = category.children_data;
+                                                        }
+                                                    }else if(categoryChildren){
+                                                        let SubCategory = _.findWhere(categoryChildren, {'id': Number(pathValue)});
+                                                        if(SubCategory){
+                                                            if (SubCategory.children_data.length > 0) {
+                                                                subChildren = SubCategory.children_data;
+                                                            }
+                                                            $this.path.push(SubCategory.name);
+                                                        }
+                                                        else if(subChildren){
+                                                            let SubChildCategory = _.findWhere(subChildren, {'id': Number(pathValue)});
+                                                            if(SubChildCategory){
+                                                                $this.path.push(SubChildCategory.name);
+                                                            }
+                                                        }
+                                                    }
+                                                });
+                                                this.toastr.success("Filter loaded successfully");
+                                                this.toastr.success("Category products loaded successfully");
+                                                this.loadProducts = "";
+                                            },
+                                            error => {
+
+                                            }
+                                        );
+                                    }
+
 
                                 },
                                 error => {
@@ -176,12 +223,14 @@ export class ProductsComponent implements OnInit {
                                 }
                             );
                         //this._router.navigate(['Home']);
+
                     },
                     error => {
                         this.products = [];
                         this.loadProducts = "";
                         this.toastr.error(error.message);
                     }
+
                 );
 
         });

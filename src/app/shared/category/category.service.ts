@@ -26,6 +26,7 @@ export class CategoryService {
             .catch(this.handleError);
     }
     setValue(val) {
+        this.categories=[];
         this.categories = val;
     }
 

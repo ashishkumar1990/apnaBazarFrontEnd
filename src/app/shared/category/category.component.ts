@@ -9,7 +9,7 @@ import * as _ from 'underscore';
     selector: 'app-category',
     templateUrl: './category.component.html',
     styleUrls: ['./category.component.scss'],
-    providers:[CategoryService]
+    providers:[]
 })
 export class CategoryComponent implements OnInit {
     categories: any;
@@ -40,15 +40,16 @@ export class CategoryComponent implements OnInit {
         this._categoryService.getCategories()
             .subscribe(
                 categories => {
-                    let categoriesData = categories.children_data;
-                    this.categories = _.filter(categoriesData, function (category) {
+                    let categoriesData = _.filter(categories.children_data, function (category) {
                         if (category.children_data && category.children_data.length > 0) {
                             return category;
                         }
                     });
                     this.loadCategories = "";
                     this.toastr.success("Categories Loaded Successfully");
-                    //this._router.navigate(['Home']);
+                    this._categoryService.setValue(categoriesData);
+                    this.categories = this._categoryService.getValue();
+                    this._router.navigate(['/home']);
                 },
                 error => {
                     this.categories = [];

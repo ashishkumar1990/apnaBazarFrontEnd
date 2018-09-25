@@ -10,6 +10,7 @@ import 'rxjs/add/Observable/throw';
 @Injectable()
 export class CategoryService {
     private _categoryurl = 'http://localhost/apnaBazar/rest/V1/categories';
+    private categories;
     constructor(private _http: Http){}
 
     getCategories() {
@@ -24,7 +25,13 @@ export class CategoryService {
             .map((response: Response) =>response.json())
             .catch(this.handleError);
     }
+    setValue(val) {
+        this.categories = val;
+    }
 
+    getValue() {
+        return this.categories ;
+    }
     private handleError(error: Response) {
         //console.error(error);
         return Observable.throw(error.json());

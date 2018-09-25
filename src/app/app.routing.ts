@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule, } from '@angular/common';
 import { BrowserModule  } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
-
+import { CategoryComponent} from './shared/category/category.component';
 import { HomeComponent } from './home/home.component';
 import { ProductsComponent } from './products/products.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -13,6 +13,7 @@ import { NucleoiconsComponent } from './components/nucleoicons/nucleoicons.compo
 
 const routes: Routes =[
     { path: 'login',             component: LoginComponent },
+    { path: 'category',             component: CategoryComponent },
     { path: 'home',             component: HomeComponent },
     { path: 'user-profile',     component: ProfileComponent },
     { path: 'signup',           component: SignupComponent },

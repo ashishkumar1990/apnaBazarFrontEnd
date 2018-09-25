@@ -50,6 +50,6 @@ export class LoginComponent implements OnInit {
     }
 
     loadHomePage() {
-        this._router.navigate(['home']);
+        this._router.navigate(['/category']);
     }
 }

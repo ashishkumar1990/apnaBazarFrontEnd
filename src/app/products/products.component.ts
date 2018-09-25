@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ProductsService} from './products.service';
 import {ToastrService} from 'ngx-toastr';
 import {ActivatedRoute, Router} from '@angular/router'
+import { CategoryService } from '../shared/category/category.service';
 import * as _ from 'underscore';
 
 @Component({
@@ -21,14 +22,17 @@ export class ProductsComponent implements OnInit {
     currentProduct: any;
     currentCategoryProducts: any;
     allProducts: any;
+    categories:any;
     filters: any = [];
     categoryAllProducts: any = [];
     loadProducts: string = "Loading products...";
 
-    constructor(private _productsService: ProductsService, private toastr: ToastrService, private _route: ActivatedRoute) {
+
+    constructor(private _productsService: ProductsService, private toastr: ToastrService, private _route: ActivatedRoute,private _categoryService:CategoryService) {
     }
 
     ngOnInit() {
+        this.categories = this._categoryService.getValue();
         this._route.params.subscribe(routeParams => {
             this.loadProducts = "Loading products...";
             this._productsService.getCategoryProductsById(routeParams.categoryId)

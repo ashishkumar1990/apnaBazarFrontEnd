@@ -29,10 +29,11 @@ export class CategoryComponent implements OnInit {
             return false;
         }
         else {
-            if (!this.categories && !this.loadCategories) {
-                this.loadCategories = "Loading Categories...";
+            let value=this._categoryService.getLoadingValue();
+            this.categories=this._categoryService.getValue();
+            if (this.categories.length === 0 && !value) {
                 let previousUrl = this._cookie.get('previousUrl');
-                if (previousUrl === "apnaBazar/home") {
+                if (title === "/apnaBazar/home" && previousUrl === "apnaBazar/home") {
                     this._cookie.put('previousUrl', "apnaBazar/category");
                     this._router.navigate(['/category']);
                 }
@@ -43,6 +44,8 @@ export class CategoryComponent implements OnInit {
     }
 
     getAllCategories() {
+        this._categoryService.setLoadingValue("Loading Categories...");
+        this.loadCategories = this._categoryService.getLoadingValue();
         this._categoryService.getCategories()
             .subscribe(
                 categories => {
@@ -51,14 +54,15 @@ export class CategoryComponent implements OnInit {
                             return category;
                         }
                     });
-                    this.loadCategories = "";
+
                     this.toastr.success("Categories Loaded Successfully");
                     this._categoryService.setValue(categoriesData);
                     this.categories = this._categoryService.getValue();
                     let previousUrl=  this._cookie.get('previousUrl');
-                    if (previousUrl === "apnaBazar/category") {
+                    if (previousUrl === "apnaBazar/category" || previousUrl === "apnaBazar/login" || previousUrl === "apnaBazar") {
                         this._router.navigate(['/home']);
                     }
+                    this.loadCategories = "";
                 },
                 error => {
                     this.categories = [];

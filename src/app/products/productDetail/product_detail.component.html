@@ -1,0 +1,91 @@
+<div class=" col-sm-12 form-row" style="margin-top: 20px" *ngIf="currentProduct">
+    <div class=" col-sm-1 form-row"></div>
+    <a style="cursor: pointer;">
+        <b><span>Home</span></b>
+        <span style=" width: 32px;display: inline-block;text-align: center;">
+                 >
+            </span>
+        <b><span>{{currentProduct.name}}</span></b>
+    </a>
+</div>
+<div class=" col-sm-12 form-row" style="margin-top: 20px" *ngIf="currentProduct">
+    <div class=" col-sm-1 form-row"></div>
+    <div class=" col-sm-5 form-row" >
+        <ngb-carousel *ngIf="images">
+            <ng-template ngbSlide *ngFor="let image of images">
+                <img style="height: 600px;" src="http://localhost/apnaBazar/pub/media/catalog/product{{image.file}}"
+                     alt="Random first slide">
+            </ng-template>
+        </ngb-carousel>
+        <div class="wrapper" style="height: 650px;padding-top: 25%; margin:0 auto;" *ngIf="images && images.length===0">
+            <mat-spinner strokeWidth="3" [diameter]="50" mode='indeterminate'
+                         style="margin:0 auto;stroke: #673ab7;"></mat-spinner>
+            <span >Loading Images</span>
+        </div>
+    </div>
+    <div class=" col-sm-1 form-row"></div>
+    <div class="col-sm-5">
+        <div>
+            <div style="font-size: 2.8em">{{currentProduct.name}}</div>
+            <br>
+            <div>
+                <div style="font-size: 1.8em;display: inline-block;">{{currentProduct.price | currency:"&#8377;"}}
+                </div>
+                <div style="float: right;display: inline-block;">
+                    <span style="font-size: 1.8em">IN STOCK</span><br>
+                    <span><b>SKU # :{{currentProduct.sku}}</b></span>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="dropdown-divider"></div>
+        <div style="padding-top: 30px;">
+            <span style="font-size: 1.8em">Color</span><br>
+            <span class="row" style="padding-left: 44px; text-align: center;" >
+            <span  *ngFor="let color of currentProduct.colors" style="padding-right: 7px;padding-left: 7px;cursor: pointer" (click)="getMediaGallery(color.value)">
+                       <span>{{color.label}} <br/>
+                   <span [ngStyle]="{ 'height': '25px',
+                             'width': '25px', 'border-radius': '50%','display': 'inline-block','border': '1px solid #BADA55'}"
+                         [style.background-color]="getColor(color.label)"></span>
+                       </span>
+            </span>
+               </span>
+            <span style="padding-top: 30px;">
+            <span style="font-size: 1.8em">Size</span><br>
+            <span class="row" style="padding-left: 25px;text-align: center; margin-bottom: 10px;">
+                <span *ngFor="let size of currentProduct.sizes" style="padding-right: 7px;padding-left: 7px;">
+                   <span [ngStyle]="{ 'height': '22px',
+                             'width': '25px','display': 'inline-block','background-color': 'lavender'}">{{size.label}}</span>
+                       </span>
+            </span>
+                </span>
+        </div>
+        <div class="form-group has-success" style="padding-top: 20px;">
+            <span><b>QTY</b></span><br>
+            <input style="width: 80px" type="number" class="form-control form-control-success" id="inputSuccess1"
+                   placeholder="Qty">
+        </div>
+        <div style="padding-top: 20px;">
+            <button type="button" class="btn btn-success">Add TO Cart</button>
+        </div>
+    </div>
+</div>
+<div lass=" col-sm-12 form-row" style="margin-top: 20px" *ngIf="currentProduct">
+    <mat-card>
+        <mat-card-content>
+            <!--<h2 class="example-h2">Tabs with text labels</h2>-->
+            <mat-tab-group class="demo-tab-group">
+                <mat-tab label="Description">
+                    <div style="padding-top: 10px" [innerHTML]="currentProduct.description"></div>
+                </mat-tab>
+                <mat-tab label="More Information">
+                    <div style="padding-top: 10px" *ngFor="let moreInformation of moreInformations ">
+                        <span ><b>{{moreInformation.code}}</b></span> : <span>{{moreInformation.value}}</span>
+                    </div>
+
+                </mat-tab>
+            </mat-tab-group>
+        </mat-card-content>
+    </mat-card>
+
+</div>

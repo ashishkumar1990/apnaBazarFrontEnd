@@ -40,7 +40,7 @@
 
 </div>
 
-<div class="wrapper" style="height: 650px;padding-top: 25%; margin:0 auto;" *ngIf="loadCategories && !categories">
+<div class="wrapper" style="height: 650px;padding-top: 25%; margin:0 auto;" *ngIf="loadCategories && categories.length===0">
     <mat-spinner strokeWidth="3" [diameter]="50" mode='indeterminate' style="margin:0 auto;stroke: #673ab7;" ></mat-spinner>
     <span style="margin-left: 46%;">{{loadCategories}}</span>
 </div>

@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CategoryComponent} from './shared/category/category.component';
 import { HomeComponent } from './home/home.component';
 import { ProductsComponent } from './products/products.component';
+import { ProductDetailComponent } from './products/productDetail/product_detail.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
@@ -18,6 +19,7 @@ const routes: Routes =[
     { path: 'user-profile',     component: ProfileComponent },
     { path: 'signup',           component: SignupComponent },
     { path: 'category-id/:categoryId/products',component: ProductsComponent },
+    { path: 'category-id/:currentCategoryId/product-sku/:product.sku',component: ProductDetailComponent },
     { path: 'landing',          component: LandingComponent },
     { path: 'nucleoicons',      component: NucleoiconsComponent },
     { path: '', redirectTo: 'login', pathMatch: 'full' }

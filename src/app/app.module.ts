@@ -20,9 +20,13 @@ import { CategoryComponent } from './shared/category/category.component';
 
 
 import { ToastrModule } from 'ngx-toastr';
+
 import { HomeModule } from './home/home.module';
 import { ProductsModule } from './products/products.module';
+import { ProductDetailModule } from './products/productDetail/product_detail.module';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
+
+
 
 @NgModule({
     declarations: [
@@ -43,6 +47,7 @@ import { CookieService } from 'angular2-cookie/services/cookies.service';
         AppRoutingModule,
         HomeModule,
         ProductsModule,
+        ProductDetailModule,
         AppMaterialDesignModule,
         ReactiveFormsModule,
         ToastrModule.forRoot({

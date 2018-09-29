@@ -17,6 +17,7 @@ import {CdkTableModule} from '@angular/cdk/table';
 import {
     MatAutocompleteModule,
     MatButtonModule,
+    MatDividerModule,
     MatButtonToggleModule,
     MatCardModule,
     MatCheckboxModule,
@@ -72,6 +73,7 @@ import {AppComponent} from './app.component';
     // Material
     MatAutocompleteModule,
     MatButtonModule,
+      MatDividerModule,
     MatButtonToggleModule,
     MatCardModule,
     MatCheckboxModule,

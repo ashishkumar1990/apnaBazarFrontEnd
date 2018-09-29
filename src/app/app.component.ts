@@ -5,6 +5,7 @@ import 'rxjs/add/operator/filter';
 import { DOCUMENT } from '@angular/platform-browser';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { CategoryService } from './shared/category/category.service';
+import { ProductsService } from './products/products.service';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 
@@ -14,11 +15,11 @@ import { CookieService } from 'angular2-cookie/services/cookies.service';
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    providers: [CategoryService,CookieService]
+    providers: [CategoryService,CookieService,ProductsService]
 })
 export class AppComponent implements OnInit {
     private _router: Subscription;
-    constructor( private renderer : Renderer, private router: Router, @Inject(DOCUMENT,) private document: any, private element : ElementRef, public location: Location,private _categoryService:CategoryService,private _cookie:CookieService) {}
+    constructor( private renderer : Renderer, private router: Router, @Inject(DOCUMENT,) private document: any, private element : ElementRef, public location: Location,private _cookie:CookieService) {}
 
     ngOnInit() {
         let previousUrl = this.location.prepareExternalUrl(this.location.path());

@@ -39,11 +39,12 @@
     <div class=" col-sm-9 form-row">
         <div class="row col-sm-3" *ngFor="let product of categoryProducts"
              style="width: 425px;padding-left: 20px;padding-right: 20px ;cursor:pointer">
-            <div class="card" (click)="populateProducts(product)">
+            <div class="card">
+                <div (click)="populateDetailProduct(product)">
             <span style="padding-left: 10px">
                 {{product.sku}}
             </span>
-                <span (click)="loadProductDetails(product.sku)">
+                <span >
                         <img style="height:250px; width:220px;"
                              src="http://localhost/apnaBazar/pub/media/catalog/product{{product.image}}"
                              alt="Washed Out"/>
@@ -69,6 +70,7 @@
                              'width': '25px','display': 'inline-block','background-color': 'lavender'}" >{{size.label}}</span>
                        </span>
             </span>
+                </div>
                 <span class="label label-info" style="margin: auto;margin-bottom: 10px;">add to Cart</span>
             </div>
         </div>

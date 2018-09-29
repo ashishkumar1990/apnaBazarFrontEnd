@@ -5,12 +5,14 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule,Routes } from '@angular/router';
-import { AppMaterialDesignModule } from '../app.material';
+import { AppMaterialDesignModule } from '../../app.material';
 
 
-import { ProductsComponent } from './products.component';
 
-import { ComponentsModule } from '../components/components.module';
+import { ProductDetailComponent } from './product_detail.component';
+
+import { ComponentsModule } from '../../components/components.module';
+
 
 
 @NgModule({
@@ -23,9 +25,10 @@ import { ComponentsModule } from '../components/components.module';
         ComponentsModule,
         AppMaterialDesignModule,
         NgbModule.forRoot()
+
     ],
-    declarations: [ ProductsComponent ],
-    exports:[ ProductsComponent ],
+    declarations: [ ProductDetailComponent ],
+    exports:[ ProductDetailComponent ],
     providers: []
 })
-export class ProductsModule { }
+export class ProductDetailModule { }

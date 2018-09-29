@@ -3,13 +3,15 @@ import {ProductsService} from './products.service';
 import {ToastrService} from 'ngx-toastr';
 import {ActivatedRoute, Router} from '@angular/router'
 import { CategoryService } from '../shared/category/category.service';
+import { CookieService } from 'angular2-cookie/services/cookies.service';
+
 import * as _ from 'underscore';
 
 @Component({
     selector: 'app-products',
     templateUrl: './products.component.html',
     styleUrls: ['./products.component.scss'],
-    providers: [ProductsService]
+    providers: []
 
 })
 
@@ -21,8 +23,7 @@ export class ProductsComponent implements OnInit {
     product: { filter: '' };
     currentFillterCode: '';
     currentFillterValue: any;
-    currentProduct: any;
-    currentCategoryProducts: any;
+    currentCategoryId: number;
     allProducts: any;
     categories:any;
     filters: any = [];
@@ -30,14 +31,15 @@ export class ProductsComponent implements OnInit {
     loadProducts: string = "Loading products...";
 
 
-    constructor(private _productsService: ProductsService, private toastr: ToastrService, private _route: ActivatedRoute,private _categoryService:CategoryService) {
+    constructor(private _cookie:CookieService,private _productsService: ProductsService, private toastr: ToastrService, private _activeRouter: ActivatedRoute,private _router: Router, private _categoryService:CategoryService) {
     }
 
     ngOnInit() {
         this.categories = this._categoryService.getValue();
-        this._route.params.subscribe(routeParams => {
+        this._activeRouter.params.subscribe(routeParams => {
             this.loadProducts = "Loading products...";
-            this._productsService.getCategoryProductsById(routeParams.categoryId)
+            this.currentCategoryId=routeParams.categoryId;
+            this._productsService.getCategoryProductsById( this.currentCategoryId)
                 .subscribe(
                     products => {
                         this.resetProducts();
@@ -170,7 +172,7 @@ export class ProductsComponent implements OnInit {
                                     if ($this.categories && $this.categories.length > 0) {
                                         $this.path=[];
                                         $this.currentCategoryName="";
-                                        this._productsService.getCategoryProductsPath(routeParams.categoryId).subscribe(
+                                        this._productsService.getCategoryProductsPath(this.currentCategoryId).subscribe(
                                             data => {
                                                  let pathValues = data.path.split("/");
                                                  $this.path.push("Home");
@@ -206,6 +208,14 @@ export class ProductsComponent implements OnInit {
                                                 this.toastr.success("Filter loaded successfully");
                                                 this.toastr.success("Category products loaded successfully");
                                                 this.loadProducts = "";
+                                                let previousUrl = this._cookie.get('previousUrl');
+                                                if (previousUrl.indexOf("product-sku") !== -1) {
+                                                    let sku = previousUrl.split("product-sku/")[1];
+                                                    let product = _.findWhere(this.categoryProducts, {'sku': sku});
+                                                    if (product) {
+                                                        this.populateDetailProduct(product);
+                                                    }
+                                                }
                                             },
                                             error => {
 
@@ -249,16 +259,17 @@ export class ProductsComponent implements OnInit {
         this.product = {filter: ''};
         this.currentFillterCode = '';
         this.currentFillterValue = {label: "", value: ""};
-        this.currentProduct = [];
-        this.currentCategoryProducts = [];
         this.allProducts = [];
         this.filters = [];
     }
 
-    populateProducts(product) {
-        this.currentProduct = {sku: product.sku, price: product.price, filters: this.filters};
-        this.currentCategoryProducts = _.findWhere(this.allProducts, {'sku': product.sku});
-        //$state.go('ocart.product.productDetail', {sku: product.sku});
+    populateDetailProduct(product) {
+        let skuProducts=_.findWhere(this.allProducts, {'sku': product.sku});
+
+        let currentProduct = {skuProducts:skuProducts, product: product, filters: this.filters};
+        this._productsService.setCurrentProductData(currentProduct);
+         this._router.navigate([`category-id/${this.currentCategoryId}/product-sku/${product.sku}`]);
+
     }
 
     populateFilterName(filterName) {
@@ -298,10 +309,4 @@ export class ProductsComponent implements OnInit {
             return "";
         }
     }
-
-    loadProductDetails(product, color, size) {
-        let $this=this;
-        $this.categoryProducts=this.allProducts;
-    }
-
 }

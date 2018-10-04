@@ -15,7 +15,7 @@ import * as _ from 'underscore';
 export class CategoryComponent implements OnInit {
     categories: any;
     loadCategories:string="";
-    loadProducts:string="";
+    userName:string="";
     constructor(private _categoryService: CategoryService,private toastr: ToastrService,public location: Location,private _router:Router,private _cookie:CookieService) {
     }
 
@@ -58,10 +58,19 @@ export class CategoryComponent implements OnInit {
                     this.toastr.success("Categories Loaded Successfully");
                     this._categoryService.setValue(categoriesData);
                     this.categories = this._categoryService.getValue();
+                   let customerDetail= this._cookie.get('customerDetail');
+                    if (customerDetail) {
+                        let customer = JSON.parse(customerDetail);
+                        if (customer) {
+                            this.userName = this.userName + customer.firstname + " " + customer.lastname;
+                            console.log(this.userName);
+                        }
+                    }
                     let previousUrl=  this._cookie.get('previousUrl');
                     if (previousUrl === "apnaBazar/category" || previousUrl === "apnaBazar/login" || previousUrl === "apnaBazar") {
                         this._router.navigate(['/home']);
                     }
+                    console.log(this.userName);
                     this.loadCategories = "";
                 },
                 error => {

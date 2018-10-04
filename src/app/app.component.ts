@@ -5,6 +5,8 @@ import 'rxjs/add/operator/filter';
 import { DOCUMENT } from '@angular/platform-browser';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { CategoryService } from './shared/category/category.service';
+import { SignupService } from './signup/signup.service';
+import { LoginService } from './login/login.service';
 import { ProductsService } from './products/products.service';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 
@@ -15,7 +17,7 @@ import { CookieService } from 'angular2-cookie/services/cookies.service';
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    providers: [CategoryService,CookieService,ProductsService]
+    providers: [CategoryService,CookieService,ProductsService,LoginService,SignupService]
 })
 export class AppComponent implements OnInit {
     private _router: Subscription;

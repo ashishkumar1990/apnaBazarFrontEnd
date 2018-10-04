@@ -33,7 +33,6 @@ export class CategoryService {
     getValue() {
         return this.categories ;
     }
-
     setLoadingValue(val) {
         this.loadCategories = val;
     }

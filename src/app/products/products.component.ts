@@ -29,6 +29,9 @@ export class ProductsComponent implements OnInit {
     filters: any = [];
     categoryAllProducts: any = [];
     loadProducts: string = "Loading products...";
+    mediaImage:string="";
+    selectedColor:any;
+    selectedSize:any;
 
 
     constructor(private _cookie:CookieService,private _productsService: ProductsService, private toastr: ToastrService, private _activeRouter: ActivatedRoute,private _router: Router, private _categoryService:CategoryService) {
@@ -309,4 +312,44 @@ export class ProductsComponent implements OnInit {
             return "";
         }
     }
+
+    getMediaImage(product, color, productsColors) {
+        let $this=this;
+        $this.mediaImage = "LoadingImage";
+        let sku = product.sku;
+        let skuProducts = _.findWhere($this.allProducts, {'sku': sku});
+        if (color.value) {
+            $this.selectedColor = color;
+            let item = _.findWhere(skuProducts.items, {'color': $this.selectedColor.value});
+            if (item) {
+                product.image = item.image;
+            }
+            _.each(productsColors, function (color) {
+                if (color.value === $this.selectedColor.value) {
+                    document.getElementById("colorBox_" + color.value + product.sku).className = "selected-color";
+                } else {
+                    document.getElementById("colorBox_" + color.value + product.sku).className = "unselected-color";
+                }
+
+            });
+        }
+    }
+
+    selectSize(product, size, productsSizes) {
+        let $this=this;
+        let sku = product.sku;
+        let skuProducts = _.findWhere($this.allProducts, {'sku': sku});
+        if (size.value) {
+            $this.selectedSize = size;
+            _.each(productsSizes, function (size) {
+                if (size.value === $this.selectedSize.value) {
+                    document.getElementById("sizeBox_" + size.value + product.sku).className = "selected-size";
+                } else {
+                    document.getElementById("sizeBox_" + size.value + product.sku).className = "unselected-size";
+                }
+
+            });
+        }
+    }
+
 }

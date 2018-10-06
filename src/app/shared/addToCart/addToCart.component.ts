@@ -1,18 +1,15 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { CategoryService } from './category.service';
+import { CategoryService } from '../category/category.service';
 import { Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 import * as _ from 'underscore';
 
 @Component({
-    selector: 'app-category',
-    templateUrl: './category.component.html',
-    styleUrls: ['./category.component.scss'],
     providers:[]
 })
-export class CategoryComponent implements OnInit {
+export class addToCartComponent implements OnInit {
     categories: any;
     loadCategories:string="";
     userName:string="";
@@ -24,33 +21,6 @@ export class CategoryComponent implements OnInit {
 
     }
 
-    isCategoryNavBarExists() {
-        var title = this.location.prepareExternalUrl(this.location.path());
-        if (title === '/apnaBazar' || title === '/apnaBazar/login' || title === '/apnaBazar/signup') {
-            return false;
-        }
-        else {
-            let value=this._categoryService.getLoadingValue();
-            this.categories=this._categoryService.getValue();
-            if (this.categories.length === 0 && !value) {
-                let previousUrl = this._cookie.get('previousUrl');
-                if (title === "/apnaBazar/home" && previousUrl === "apnaBazar/home") {
-                    this._cookie.put('previousUrl', "apnaBazar/category");
-                    this._router.navigate(['/category']);
-                }
-                this.getAllCategories();
-            }
-            let customerDetail= this._cookie.get('customerDetail');
-            if (customerDetail) {
-                let customer = JSON.parse(customerDetail);
-                if (customer && !this.userName) {
-                    this.userName =  customer.firstname + " " + customer.lastname;
-                    console.log(this.userName);
-                }
-            }
-            return true;
-        }
-    }
 
     getAllCategories() {
         this._categoryService.setLoadingValue("Loading Categories...");

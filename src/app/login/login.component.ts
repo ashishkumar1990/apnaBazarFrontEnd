@@ -92,7 +92,7 @@ export class LoginComponent implements OnInit {
                                     cart => {
                                         this._cookie.put('customerCartDetail', JSON.stringify(cart));
                                         this.toastr.success("customer cart loaded Successfully");
-                                        this._router.navigate(['/home']);
+                                        this._router.navigate(['/category']);
                                     },
                                     error => {
                                         this._router.navigate(['login']);

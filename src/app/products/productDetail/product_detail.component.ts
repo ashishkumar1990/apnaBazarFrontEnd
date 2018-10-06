@@ -71,6 +71,18 @@ export class ProductDetailComponent implements OnInit {
         this._productDetailService.getProductMediaGallery(sku)
             .subscribe(
                 media => {
+                    let mainItemIndex=0;
+                    let mainItem;
+                    _.each(media.media_gallery_entries, function (media,index) {
+                        if (media.types && media.types.length > 0) {
+                            mainItem= media;
+                            mainItemIndex= index;
+                        }
+                    });
+                    if (mainItem) {
+                        media.media_gallery_entries.splice(0, 0, mainItem);
+                        media.media_gallery_entries.splice(mainItemIndex+1, 1);
+                    }
                     this.images = media.media_gallery_entries;
                 },
                 error => {

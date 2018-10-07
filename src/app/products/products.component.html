@@ -37,9 +37,10 @@
     </div>
 
     <div class=" col-sm-9 form-row">
-        <div class="row col-sm-3" *ngFor="let product of categoryProducts"
+        <div class="row col-sm-3" *ngFor="let product of categoryProducts let i=index"
              style="width: 425px;padding-left: 20px;padding-right: 20px ;">
 
+            <form>
             <div class="card" >
                 <span style="padding-left: 10px">
                 {{product.sku}}
@@ -70,12 +71,13 @@
                        </span>
             </span>
                 <span class="form-group has-success" style="padding-top: 5px;">
-                    <input style="width: 80px;display: initial;margin-left: 28px;" type="number" class="form-control form-control-success" id="inputSuccess1"
-                           placeholder="Qty">
-                    <span class="label label-info" style="margin: auto;margin-bottom: 10px;cursor: pointer">add to Cart</span>
-                </span>
+                    <input style="width: 70px;height:30px;display: initial;margin-left: 28px; margin-right: 10px;" type="number" min="1" class="form-control form-control-success" id="inputSuccess1"
+                           required  placeholder="Qty" [(ngModel)]="qty[i]"  name="qty" #qty="ngModel">
 
-                </div>
+                    <span class="label label-warning" style="margin: auto;margin-bottom: 10px;cursor: pointer" (click)="addToCart(product,qty[i])">add to Cart</span>
+                </span>
+            </div>
+            </form>
         </div>
     </div>
 </div>

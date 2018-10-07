@@ -20,7 +20,7 @@
                         </div>
                         <form  #loginForm="ngForm">
                             <label>Email</label>
-                            <input type="text" class="form-control" id="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" [(ngModel)]="login.email" placeholder="Email" name="email" #email="ngModel">
+                            <input type="text" class="form-control" id="email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" [(ngModel)]="login.email" placeholder="Email" name="email" #email="ngModel">
 
                             <label>Password</label>
                             <input type="password" class="form-control" id="password" required  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}" [(ngModel)]="login.password" placeholder="Password" name="password" #password="ngModel">

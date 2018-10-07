@@ -25,6 +25,7 @@ import { HomeModule } from './home/home.module';
 import { ProductsModule } from './products/products.module';
 import { ProductDetailModule } from './products/productDetail/product_detail.module';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { MyDialogBoxComponent } from './products/products.component';
 
 
 
@@ -36,7 +37,8 @@ import { CookieService } from 'angular2-cookie/services/cookies.service';
         LandingComponent,
         ProfileComponent,
         FooterComponent,
-        CategoryComponent
+        CategoryComponent,
+        MyDialogBoxComponent
     ],
     imports: [
         BrowserModule,
@@ -56,6 +58,7 @@ import { CookieService } from 'angular2-cookie/services/cookies.service';
             preventDuplicates: true,
         })
     ],
+    entryComponents:[MyDialogBoxComponent],
     providers: [CookieService],
     bootstrap: [AppComponent]
 })

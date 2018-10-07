@@ -37,7 +37,7 @@
               <div class="dropdown-divider"></div>
               <label>Email *</label>
               <div style="display: block; margin-left: auto;margin-right: auto;position: relative;">
-              <input type="text" class="form-control" id="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" [(ngModel)]="signup.email" placeholder="Email" name="email" #email="ngModel" (blur)="checkEmailAvailable()">
+              <input type="text" class="form-control" id="email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" [(ngModel)]="signup.email" placeholder="Email" name="email" #email="ngModel" (blur)="checkEmailAvailable()">
               <img [hidden]="!signup.emailExists" style="height: 30px; margin-left: auto;margin-right: auto; margin-top: auto;position: absolute; right: 5px;top: 5px;" src='../assets/img/email-check.png' />
               </div>
               <div [hidden]="!email.valid||signup.emailExists" class="alert alert-danger">

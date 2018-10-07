@@ -1,9 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit,ViewChild,Inject} from '@angular/core';
 import {ProductsService} from './products.service';
 import {ToastrService} from 'ngx-toastr';
+import {FormsModule, NgForm}  from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router'
 import { CategoryService } from '../shared/category/category.service';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
+import {MatDialog} from '@angular/material';
+import {MatDialogRef,MAT_DIALOG_DATA} from '@angular/material';
 
 import * as _ from 'underscore';
 
@@ -32,9 +35,12 @@ export class ProductsComponent implements OnInit {
     mediaImage:string="";
     selectedColor:any;
     selectedSize:any;
+    qty:number;
+    error:string;
+    productsForm: NgForm;
+    @ViewChild('productsForm') currentForm: NgForm;
 
-
-    constructor(private _cookie:CookieService,private _productsService: ProductsService, private toastr: ToastrService, private _activeRouter: ActivatedRoute,private _router: Router, private _categoryService:CategoryService) {
+    constructor(public dialog: MatDialog,private _cookie:CookieService,private _productsService: ProductsService, private toastr: ToastrService, private _activeRouter: ActivatedRoute,private _router: Router, private _categoryService:CategoryService) {
     }
 
     ngOnInit() {
@@ -350,6 +356,63 @@ export class ProductsComponent implements OnInit {
 
             });
         }
+    }
+    addToCart(product,qty) {
+        if (!this.selectedSize && !this.selectedColor && (!this.qty || this.qty===0) ) {
+            this.error="Please select color,size and qty.";
+            this.openDialog();
+            return;
+        }
+        if (!this.selectedSize && !this.selectedColor) {
+            this.error="Please select color and size.";
+            this.openDialog();
+            return;
+        }
+        if (!this.selectedColor) {
+            this.error="Please select color.";
+            this.openDialog();
+            return;
+        }
+        if (!this.selectedSize) {
+            this.error="Please select size.";
+            this.openDialog();
+            return;
+        }
+        if (!this.qty || this.qty===0) {
+            this.error="Please select qty.";
+            this.openDialog();
+            return;
+        }
+        this.toastr.success("done");
+    }
+
+    openDialog(){
+        let dialogRef = this.dialog.open(MyDialogBoxComponent, {
+            width: '380px',
+            data: this.error
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            // console.log('The dialog was closed');
+            // this.animal = result;
+        });
+    }
+}
+
+@Component({
+    selector: 'app-my-dialog-box',
+    templateUrl: './add-cart-error-dialog-box.component.html',
+    styleUrls: ['./add-cart-error-dialog-box.component.scss']
+})
+export class MyDialogBoxComponent implements OnInit {
+
+    constructor(public thisDialogRef:MatDialogRef<MyDialogBoxComponent>,@Inject(MAT_DIALOG_DATA)public data:string) { }
+
+    ngOnInit() {
+    }
+
+    onClose(){
+        this.thisDialogRef.close("Ok");
     }
 
 }

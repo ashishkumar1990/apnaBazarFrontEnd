@@ -26,7 +26,7 @@ import { ProductsModule } from './products/products.module';
 import { ProductDetailModule } from './products/productDetail/product_detail.module';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { MyDialogBoxComponent } from './products/products.component';
-
+import { CartValidationComponent } from './products/productDetail/product_detail.component';
 
 
 @NgModule({
@@ -38,7 +38,8 @@ import { MyDialogBoxComponent } from './products/products.component';
         ProfileComponent,
         FooterComponent,
         CategoryComponent,
-        MyDialogBoxComponent
+        MyDialogBoxComponent,
+        CartValidationComponent
     ],
     imports: [
         BrowserModule,
@@ -58,7 +59,7 @@ import { MyDialogBoxComponent } from './products/products.component';
             preventDuplicates: true,
         })
     ],
-    entryComponents:[MyDialogBoxComponent],
+    entryComponents:[MyDialogBoxComponent,CartValidationComponent],
     providers: [CookieService],
     bootstrap: [AppComponent]
 })

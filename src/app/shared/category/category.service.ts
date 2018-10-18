@@ -12,6 +12,7 @@ export class CategoryService {
     private _categoryurl = 'http://localhost/apnaBazar/rest/V1/categories';
     private categories=[];
     private loadCategories="";
+    private userName="";
     constructor(private _http: Http){}
 
     getCategories() {
@@ -39,6 +40,13 @@ export class CategoryService {
 
     getLoadingValue() {
         return this.loadCategories ;
+    }
+    setUserName(val) {
+        this.userName = val;
+    }
+
+    getUserName() {
+        return this.userName ;
     }
     private handleError(error: Response) {
         //console.error(error);

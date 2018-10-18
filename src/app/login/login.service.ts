@@ -38,16 +38,16 @@ export class LoginService {
     }
 
 
-    getCustomerCartDetail(tokenData) {
-        let options = new RequestOptions({
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            })});
-        options.headers.set("authorization", tokenData);
-        return this._http.get(this._getCustomerCartData,options)
-            .map((response: Response) => response.json())
-            .catch(this.handleError);
-    }
+    // getCustomerCartDetail(tokenData) {
+    //     let options = new RequestOptions({
+    //         headers: new Headers({
+    //             'Content-Type': 'application/json'
+    //         })});
+    //     options.headers.set("authorization", tokenData);
+    //     return this._http.get(this._getCustomerCartData,options)
+    //         .map((response: Response) => response.json())
+    //         .catch(this.handleError);
+    // }
 
     private handleError(error: Response) {
         //console.error(error);

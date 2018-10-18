@@ -9,11 +9,10 @@ import * as _ from 'underscore';
 @Component({
     providers:[]
 })
-export class addToCartComponent implements OnInit {
+export class cartComponent implements OnInit {
     categories: any;
     loadCategories:string="";
     userName:string="";
-    cartItemCount:number=0;
     constructor(private _categoryService: CategoryService,private toastr: ToastrService,public location: Location,private _router:Router,private _cookie:CookieService) {
     }
 

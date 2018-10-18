@@ -1,81 +1,255 @@
-<div class="wrapper">
-    <div class="page-header page-header-xs" data-parallax="true" style="background-image: url('../assets/img/fabio-mangione.jpg');">
+<div class="wrapper" [hidden]="!categories">
+    <div class="page-header page-header-xs" data-parallax="true" style="background-image: url('../assets/img/fabio-mangione.jpg');min-height: 25vh !important;">
         <div class="filter"></div>
     </div>
-    <div class="section profile-content">
+    <div class="section profile-content" style="padding-bottom:30px">
         <div class="container">
             <div class="owner">
                 <div class="avatar">
                     <img src="../assets/img/faces/joe-gardner-2.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
                 </div>
-                <div class="name">
-                    <h4 class="title">Jane Faker<br /></h4>
-                    <h6 class="description">Music Producer</h6>
-                </div>
+                <br />
+                <span class="name">{{accountInformation.firstName+" "+accountInformation.lastName| titlecase}}<br /></span>
             </div>
-            <div class="row">
-                <div class="col-md-6 ml-auto mr-auto text-center">
-                    <p>An artist of considerable range, Jane Faker — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. </p>
-                    <br />
-                    <button class="btn btn-outline-default btn-round"><i class="fa fa-cog"></i> Settings</button>
-                </div>
-            </div>
-            <br/>
             <div class="nav-tabs-navigation">
                 <div class="nav-tabs-wrapper">
-                    <ngb-tabset [justify]="'center'">
-                        <ngb-tab title="Follows">
+                    <ngb-tabset [justify]="'center'" [activeId]="selectedTab" #tabs (tabChange)="onTabChange($event)">
+                        <ngb-tab title="My Account Information" id="AccountInformation">
                             <ng-template ngbTabContent >
-                                <div class="row following" id="follows">
-                                    <div class="col-md-6 ml-auto mr-auto">
-                                        <ul class="list-unstyled follows">
-                                            <li>
-                                                <div class="row">
-                                                    <div class="col-md-2 col-sm-2 ml-auto mr-auto">
-                                                        <img src="../assets/img/faces/clem-onojeghuo-2.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
-                                                    </div>
-                                                    <div class="col-md-7 col-sm-4 ml-auto">
-                                                        <h6>Flume<br/><small>Musical Producer</small></h6>
-                                                    </div>
-                                                    <div class="col-md-3 col-sm-2 ml-auto mr-auto">
-                                                        <div class="form-check">
-                                                          <label class="form-check-label">
-                                                            <input class="form-check-input" type="checkbox" value="" checked="">
-                                                            <span class="form-check-sign"></span>
-                                                          </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <hr />
-                                            <li>
-                                                <div class="row">
-                                                    <div class="col-md-2 col-sm-2 ml-auto mr-auto">
-                                                        <img src="../assets/img/faces/ayo-ogunseinde-2.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
-                                                    </div>
-                                                    <div class="col-md-7 col-sm-4 ml-auto">
-                                                        <h6>Banks<br /><small>Singer</small></h6>
-                                                    </div>
-                                                    <div class="col-md-3 col-sm-2 ml-auto mr-auto">
-                                                        <div class="form-check">
-                                                          <label class="form-check-label">
-                                                            <input class="form-check-input" type="checkbox" value="" checked="">
-                                                            <span class="form-check-sign"></span>
-                                                          </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                <div class="wrapper" style="padding-top: 10px; margin:0 auto;" *ngIf="accountInformation.updatingAccount">
+                                    <mat-spinner strokeWidth="3" [diameter]="50" mode='indeterminate' style="margin:0 auto;stroke: #673ab7;" ></mat-spinner>
+                                    <span>Account Updating</span>
+                                </div>
+                                <div [hidden]="accountInformation.updatingAccount">
+                                <b style="margin-bottom: 10px;font-size: large">Account Information</b><br />
+                                    <i class="material-icons" style="color: #6bd098; margin-right: 25px;" >account_circle</i>
+                                <mat-form-field class="example-form-field">
+                                    <input matInput type="text" placeholder="firstName" [(ngModel)]=" accountInformation.firstName" disabled="{{accountInformation.disabled}}">
+                                </mat-form-field><br />
+                                    <i class="material-icons" style="color: #6bd098; margin-right: 25px;" >account_box</i>
+                                <mat-form-field class="example-form-field">
+                                    <input matInput type="text" placeholder="lastName" [(ngModel)]="accountInformation.lastName" disabled={{accountInformation.disabled}}>
+                                </mat-form-field><br />
+                                    <i class="material-icons" style="color: #6bd098; margin-right: 25px;" >email</i>
+                                <mat-form-field class="example-form-field">
+                                    <input matInput type="email" placeholder="email" [(ngModel)]="accountInformation.email" disabled={{accountInformation.disabled}}>
+                                </mat-form-field><br />
+                                <button type="button" class="btn btn-success btn-round" (click)="editAccountInformation('accountInformation')">{{accountInformation.disabled ? 'Edit Account' : "Update Account"}}</button>
+                                <!--<button type="button" class="btn btn-info btn-round">Change Password</button>-->
                                 </div>
                             </ng-template>
                         </ngb-tab>
-                        <ngb-tab title="Following">
+                        <ngb-tab title="Change Password" id="ChangePassword">
+                            <ng-template ngbTabContent >
+                                <div class="wrapper" style="padding-top: 10px; margin:0 auto;" *ngIf="changePassword.updatingPassword">
+                                    <mat-spinner strokeWidth="3" [diameter]="50" mode='indeterminate' style="margin:0 auto;stroke: #673ab7;" ></mat-spinner>
+                                    <span>Password Updating</span>
+                                </div>
+                                <div [hidden]="changePassword.updatingPassword">
+                                    <b style="margin-bottom: 10px;font-size: large">Change Password</b><br />
+                                    <mat-form-field class="example-form-field">
+                                        <input matInput type="password" placeholder="oldPassword" [(ngModel)]="changePassword.currentPassword" disabled="{{changePassword.disabled}}">
+                                    </mat-form-field><br />
+                                    <mat-form-field class="example-form-field">
+                                        <input matInput type="password" placeholder="newPassword" [(ngModel)]="changePassword.newPassword" disabled={{changePassword.disabled}}>
+                                    </mat-form-field><br />
+                                    <mat-form-field class="example-form-field">
+                                        <input matInput type="password" placeholder="confirmPassword" [(ngModel)]="changePassword.confirmNewPassword" disabled={{changePassword.disabled}}>
+                                    </mat-form-field><br />
+                                    <button type="button" class="btn btn-info btn-round" (click)="updatePassword('ChangePassword')">{{"Update Password"}}</button>
+                                    <!--<button type="button" class="btn btn-info btn-round">Change Password</button>-->
+                                </div>
+                            </ng-template>
+                        </ngb-tab>
+                        <ngb-tab title="My Address Book" id="AddressBook">
+                            <ng-template ngbTabContent >
+                                <div class="wrapper" style="padding-top: 10px; margin:0 auto;" *ngIf="addressBook.updatingAddressBook">
+                                    <mat-spinner strokeWidth="3" [diameter]="50" mode='indeterminate' style="margin:0 auto;stroke: #673ab7;" ></mat-spinner>
+                                    <span>Address Updating</span>
+                                </div>
+                                <b style="margin-bottom: 10px;font-size: large"  [hidden]="addressBook.updatingAddressBook">Address Book</b><br />
+                                <div [hidden]="addressBook.updatingAddressBook" class=" col-sm-12 form-row ">
+                                    <div class="col-sm-6 " style="border-right:2px solid orangered">
+                                        <span>
+                                        <i class="material-icons" style="color: orange; margin-right: 25px;">account_circle</i>
+                                        <mat-form-field style="width:86%;">
+                                            <input matInput type="text" placeholder="firstName"
+                                                   [(ngModel)]=" addressBook.firstName"
+                                                   disabled="{{addressBook.disabled}}">
+                                        </mat-form-field>
+                                        </span>
+                                        <span>
+                                        <i class="material-icons" style="color: orange; margin-right: 25px;">account_box</i>
+                                        <mat-form-field style="width:86%;">
+                                            <input matInput type="text" placeholder="lastName"
+                                                   [(ngModel)]="addressBook.lastName"
+                                                   disabled={{addressBook.disabled}}>
+                                        </mat-form-field>
+                                        </span>
+
+                                        <span>
+                                        <i class="material-icons" style="color: orange; margin-right: 25px;">contact_phone</i>
+                                        <mat-form-field style="width:86%;">
+                                            <input matInput type="number" placeholder="phoneNo"
+                                                   [(ngModel)]="addressBook.telephone"
+                                                   disabled={{addressBook.disabled}}>
+                                        </mat-form-field>
+                                        </span>
+                                        <span>
+                                             <img style="width: 30px;margin-right: 25px;"
+                                                  src="./../../assets/img/postalcode .png"
+                                                  alt="Washed Out"/>
+                                        <mat-form-field style="width:86%;">
+                                            <input matInput type="number" placeholder="zip/postal code"
+                                                   [(ngModel)]="addressBook.postcode"
+                                                   disabled={{addressBook.disabled}}>
+                                        </mat-form-field>
+                                        </span>
+                                        <!--<button type="button" class="btn btn-success btn-round" (click)="updatePassword('ChangePassword')">{{"Update Password"}}</button>-->
+                                    </div>
+                                    <div class="col-sm-6 ">
+                                        <span>
+                                        <i class="material-icons" style="color: orange; margin-right: 25px;">location_on</i>
+                                        <mat-form-field style="width:86%;">
+                                            <input matInput type="text" placeholder="street address line 1"
+                                                   [(ngModel)]=" addressBook.addressLine1"
+                                                   disabled="{{addressBook.disabled}}">
+                                        </mat-form-field>
+                                        </span>
+                                        <span>
+                                        <i class="material-icons" style="color: orange; margin-right: 25px;">location_on</i>
+                                        <mat-form-field style="width:86%;">
+                                            <input matInput type="text" placeholder="street address line 2"
+                                                   [(ngModel)]="addressBook.addressLine2"
+                                                   disabled={{addressBook.disabled}}>
+                                        </mat-form-field>
+                                        </span>
+
+                                        <span>
+                                        <i class="material-icons" style="color:orange; margin-right: 25px;">location_city</i>
+                                        <mat-form-field style="width:86%;">
+                                            <input matInput type="text" placeholder="city"
+                                                   [(ngModel)]="addressBook.city"
+                                                   disabled={{addressBook.disabled}}>
+                                        </mat-form-field>
+                                        </span>
+                                        <span>
+                                        <i class="material-icons" style="color:orange; margin-right: 25px;">account_balance</i>
+                                        <mat-form-field style="width:86%;">
+                                            <input matInput type="text" placeholder="state/province"
+                                                   [(ngModel)]="addressBook.region"
+                                                   disabled={{addressBook.disabled}}>
+                                        </mat-form-field>
+                                        </span>
+                                        <!--<button type="button" class="btn btn-success btn-round" (click)="updatePassword('ChangePassword')">{{"Update Password"}}</button>-->
+                                    </div>
+
+                                </div>
+                                <button type="button" style="margin-top:10px" class="btn btn-warning btn-round" [hidden]="addressBook.updatingAddressBook" (click)="updateAddress()">{{addressBook.disabled ? 'Edit Address Book' : "Update Address Book"}}</button>
+                            </ng-template>
+                        </ngb-tab>
+                        <ngb-tab title="My Cart" id="CartInformation">
                             <ng-template ngbTabContent>
-                                <h3 class="text-muted">Not following anyone yet :(</h3>
-                                <br>
-                                <button class="btn btn-warning btn-round">Find artists</button>
+                                <div class="wrapper" style="padding-top: 10px; margin:0 auto;"
+                                     *ngIf="cartInformation.loadingCartItem">
+                                    <mat-spinner strokeWidth="3" [diameter]="50" mode='indeterminate'
+                                                 style="margin:0 auto;stroke: #673ab7;"></mat-spinner>
+                                    <span>{{cartInformation.spinnerValue}}</span>
+                                </div>
+                                <div class="container" [hidden]="cartInformation.loadingCartItem">
+                                    <table id="cart" class="table table-hover table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th style="width:50%">Product</th>
+                                            <th style="width:10%">Price</th>
+                                            <th style="width:8%">Quantity</th>
+                                            <th style="width:22%" class="text-center">Subtotal</th>
+                                            <th style="width:10%"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody *ngFor="let item of cartInformation.cartItems let i=index">
+                                        <tr>
+                                            <td data-th="Product">
+                                                <div class="row">
+                                                    <div class="col-sm-2 hidden-xs"><img  style="height: 100px;width: 100px" src="http://localhost/apnaBazar/pub/media/catalog/product{{item.image}}" alt="..." class="img-responsive"/></div>
+                                                    <div class="col-sm-10">
+                                                        <h4 class="nomargin">{{item.name}}</h4>
+                                                        <!--<p>Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet.</p>-->
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td data-th="Price">{{item.price | currency:"&#8377;"}}</td>
+                                            <td data-th="Quantity">
+                                                <input style="width:70px;" type="number" min="1" class="form-control form-control-success" id="inputSuccess1"
+                                                min="1" required placeholder="Qty" [(ngModel)]="item.qty" name="qty" #qty="ngModel" (change)="updateQuantity(item)">
+                                            </td>
+                                            <td data-th="Subtotal" class="text-center">{{item.subTotal | currency:"&#8377;"}}</td>
+                                            <td class="actions" data-th="">
+                                                <button class="btn btn-danger btn-sm" (click)="removeItem(item)"><i class="fa fa-trash-o"></i></button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        <tfoot>
+                                        <tr class="visible-xs">
+                                            <td class="text-center"><strong>Total {{cartInformation.cartSubTotal| currency:"&#8377;"}}</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td><a  routerLink="/home" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+                                            <td colspan="2" class="hidden-xs"></td>
+                                            <td class="hidden-xs text-center"><strong>Total {{cartInformation.cartSubTotal| currency:"&#8377;"}} </strong></td>
+                                            <td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </ng-template>
+                        </ngb-tab>
+                        <ngb-tab title="My Orders" id="OrdersInformation">
+                            <ng-template ngbTabContent >
+                                OrdersInformation
+                                <!--<div class="row following" >-->
+                                    <!--<div class="col-md-6 ml-auto mr-auto">-->
+                                        <!--<ul class="list-unstyled follows">-->
+                                            <!--<li>-->
+                                                <!--<div class="row">-->
+                                                    <!--<div class="col-md-2 col-sm-2 ml-auto mr-auto">-->
+                                                        <!--<img src="../assets/img/faces/clem-onojeghuo-2.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">-->
+                                                    <!--</div>-->
+                                                    <!--<div class="col-md-7 col-sm-4 ml-auto">-->
+                                                        <!--<h6>Flume<br/><small>Musical Producer</small></h6>-->
+                                                    <!--</div>-->
+                                                    <!--<div class="col-md-3 col-sm-2 ml-auto mr-auto">-->
+                                                        <!--<div class="form-check">-->
+                                                            <!--<label class="form-check-label">-->
+                                                                <!--<input class="form-check-input" type="checkbox" value="" checked="">-->
+                                                                <!--<span class="form-check-sign"></span>-->
+                                                            <!--</label>-->
+                                                        <!--</div>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                            <!--</li>-->
+                                            <!--<hr />-->
+                                            <!--<li>-->
+                                                <!--<div class="row">-->
+                                                    <!--<div class="col-md-2 col-sm-2 ml-auto mr-auto">-->
+                                                        <!--<img src="../assets/img/faces/ayo-ogunseinde-2.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">-->
+                                                    <!--</div>-->
+                                                    <!--<div class="col-md-7 col-sm-4 ml-auto">-->
+                                                        <!--<h6>Banks<br /><small>Singer</small></h6>-->
+                                                    <!--</div>-->
+                                                    <!--<div class="col-md-3 col-sm-2 ml-auto mr-auto">-->
+                                                        <!--<div class="form-check">-->
+                                                            <!--<label class="form-check-label">-->
+                                                                <!--<input class="form-check-input" type="checkbox" value="" checked="">-->
+                                                                <!--<span class="form-check-sign"></span>-->
+                                                            <!--</label>-->
+                                                        <!--</div>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                            <!--</li>-->
+                                        <!--</ul>-->
+                                    <!--</div>-->
+                                <!--</div>-->
                             </ng-template>
                         </ngb-tab>
                     </ngb-tabset>

@@ -3,7 +3,7 @@
         <a [routerLink]="['/home']" > <img
                 style="height:30px;display: block;margin-left: 38px;margin-right: 30px;cursor: pointer;"
                 src='../assets/img/apna-bazar-home-page-logo.png'/> </a>
-        <span *ngFor="let category of categories">
+        <span  *ngFor="let category of categories">
         <button mat-button [matMenuTriggerFor]="menu">
           {{category.name}}
         </button>
@@ -30,7 +30,19 @@
                         </div>
                     </form>
                 </li>
-                <li  class="nav-item" style="margin-top: 23px" *ngIf="userName"> <i class="material-icons" style="color:mediumvioletred">face</i></li>
+
+                <!--<li  class="nav-item" style="margin-top: 23px" *ngIf="userName">-->
+                    <div ngbDropdown class="d-inline-block dropdown" style="margin-top: 23px">
+                        <a class="dropDown" id="dropdownBasic1" ngbDropdownToggle style="margin-right: 8px;color: white;cursor: pointer"><i class="material-icons" style="color:mediumvioletred" >face</i></a>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-primary">
+                            <a class="dropdown-item" routerLink="/user-profile/account-information">My Profile</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" routerLink="/user-profile/account-information">My Orders</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item">SignOut</a>
+                        </div>
+                    </div>
+                <!--</li>-->
                 <li class="nav-item" style="margin-top: 25px">
                     <span style="color:white">Welcome   </span> <span style="color:mediumvioletred"><b>{{userName| titlecase}}</b></span>
                 </li>
@@ -39,11 +51,11 @@
                     <a class="nav-link" routerLink="/login"><b >Login & SignUp</b></a>
                 </li>
 
-                <li class="nav-item" style="margin-top: 23px;margin-left: 5px">
+                <li class="nav-item" style="margin-top: 23px;margin-left: 5px;cursor: pointer" routerLink="/user-profile/cart-information">
                     <i class="material-icons " style="color:gold">add_shopping_cart</i>
                 </li>
-                <li style="margin-top: 15px" *ngIf="cartItemCount!==0">
-                <span class="step">{{cartItemCount}}</span>
+                <li style="margin-top: 15px;position: relative;margin-right: 15px;" *ngIf="cartItemCount">
+                    <span class="step">{{cartItemCount}}</span>
                 </li>
 
 
@@ -65,7 +77,7 @@
 
 </div>
 
-<div class="wrapper" style="height: 650px;padding-top: 25%; margin:0 auto;" *ngIf="loadCategories && categories.length===0">
+<div class="wrapper" style="height: 650px;padding-top: 25%; margin:0 auto;" *ngIf="(!categories || categories.length===0) && loadCategories ">
     <mat-spinner strokeWidth="3" [diameter]="50" mode='indeterminate' style="margin:0 auto;stroke: #673ab7;" ></mat-spinner>
     <span style="margin-left: 46%;">{{loadCategories}}</span>
 </div>

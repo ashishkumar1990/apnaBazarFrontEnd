@@ -5,6 +5,7 @@ import {ToastrService} from 'ngx-toastr';
 import {FormsModule, NgForm}  from '@angular/forms';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 import {LoginService} from './login.service';
+import { CartService } from '../shared/cart/cart.service';
 
 
 
@@ -24,7 +25,7 @@ export class LoginComponent implements OnInit {
     loginForm: NgForm;
     @ViewChild('loginForm') currentForm: NgForm;
 
-    constructor(private _router:Router,private _cookie:CookieService,private _login:LoginService, private toastr: ToastrService,) {
+    constructor(private _router:Router,private _cookie:CookieService,private _login:LoginService, private toastr: ToastrService,private _cartService:CartService) {
         //FB.init({
         //    appId      : '197240367495969',
         //    cookie     : false,  // enable cookies to allow the server to access
@@ -61,7 +62,7 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         this._cookie.put('customerToken', "");
         this._cookie.put('customerDetail', "");
-        this._cookie.put('customerCartDetail', "");
+        this._cookie.put('customerCartCount', "");
     }
 
     customerLogin() {
@@ -87,26 +88,33 @@ export class LoginComponent implements OnInit {
 
                             this.toastr.success("customer loaded Successfully");
                             this.loading="Loading customer cart";
-                            this._login.getCustomerCartDetail(tokenData)
+                            this._cartService.getCustomerCartDetail()
                                 .subscribe(
                                     cart => {
-                                        this._cookie.put('customerCartDetail', JSON.stringify(cart));
+                                        let cartData = {
+                                            itemsCount: cart.items_count
+                                        };
+                                        this._cookie.put('customerCartCount', JSON.stringify(cartData));
+                                        this._cartService.setCartItemCount(cartData.itemsCount);
                                         this.toastr.success("customer cart loaded Successfully");
                                         this._router.navigate(['/category']);
                                     },
                                     error => {
+                                        this.loading="";
                                         this._router.navigate(['login']);
                                         this.toastr.error(error.message);
                                     }
                                 );
                         },
                         error => {
+                            this.loading="";
                             this._router.navigate(['login']);
                             this.toastr.error(error.message);
                         }
                     );
             },
             error => {
+                this.loading="";
                 this._router.navigate(['login']);
                 this.toastr.error(error.message);
             }

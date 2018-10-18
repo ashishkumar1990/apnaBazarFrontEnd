@@ -23,8 +23,6 @@ export class SignupService {
             'Content-Type': 'application/json',
             'Accept'      : 'application/json'
         });
-        // headers.append('Authorization', ' Bearer 3sl175yf8v8pec7hjll9v79mt1w0tvpv');
-
         let options = new RequestOptions({headers: headers});
         return this._http.post(this._checkEmailurl,emailData,options)
             .map((response: Response) =>response.json())

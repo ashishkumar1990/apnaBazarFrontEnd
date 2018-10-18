@@ -5,6 +5,7 @@ import {FormsModule, NgForm}  from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router'
 import { CategoryService } from '../shared/category/category.service';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { CartService } from '../shared/cart/cart.service';
 import {MatDialog} from '@angular/material';
 import {MatDialogRef,MAT_DIALOG_DATA} from '@angular/material';
 
@@ -35,12 +36,12 @@ export class ProductsComponent implements OnInit {
     mediaImage:string="";
     selectedColor:any;
     selectedSize:any;
-    qty:number;
     error:string;
+    validateProduct:boolean;
     productsForm: NgForm;
     @ViewChild('productsForm') currentForm: NgForm;
 
-    constructor(public dialog: MatDialog,private _cookie:CookieService,private _productsService: ProductsService, private toastr: ToastrService, private _activeRouter: ActivatedRoute,private _router: Router, private _categoryService:CategoryService) {
+    constructor(public dialog: MatDialog,private _cookie:CookieService,private _productsService: ProductsService, private toastr: ToastrService, private _activeRouter: ActivatedRoute,private _router: Router, private _categoryService:CategoryService,private _cartService:CartService) {
     }
 
     ngOnInit() {
@@ -357,33 +358,55 @@ export class ProductsComponent implements OnInit {
             });
         }
     }
-    addToCart(product,qty) {
-        if (!this.selectedSize && !this.selectedColor && (!this.qty || this.qty===0) ) {
-            this.error="Please select color,size and qty.";
+
+    addToCart(product, qty) {
+        let response = this._cartService.validateCart(product, this.selectedColor, this.selectedSize, qty);
+        if (response && response.error) {
+            this.error = response.error;
             this.openDialog();
             return;
         }
-        if (!this.selectedSize && !this.selectedColor) {
-            this.error="Please select color and size.";
-            this.openDialog();
-            return;
+        this.validateProduct=true;
+        let productSku = product.sku;
+        if (this.selectedSize) {
+            productSku = productSku + "-" + this.selectedSize.label;
         }
-        if (!this.selectedColor) {
-            this.error="Please select color.";
-            this.openDialog();
-            return;
+        if (this.selectedColor) {
+            productSku = productSku + "-" + this.selectedColor.label;
         }
-        if (!this.selectedSize) {
-            this.error="Please select size.";
-            this.openDialog();
-            return;
-        }
-        if (!this.qty || this.qty===0) {
-            this.error="Please select qty.";
-            this.openDialog();
-            return;
-        }
-        this.toastr.success("done");
+        this._cartService.quoteId().subscribe(
+            quoteId => {
+                let cartItem = {
+                    "cart_item": {
+                        "quote_id": quoteId,
+                        "sku": productSku,
+                        "qty": qty
+                    }
+                };
+                return this._cartService.addCartItem(cartItem).subscribe(
+                    cartItem => {
+                        this.toastr.success("Item  " + cartItem.name + "  is successfully added in your shopping cart with quantity of " + cartItem.qty);
+                        if (cartItem.qty === qty) {
+                            let getCartItemCount = this._cartService.getCartItemCount();
+                            let setCartItemCount = getCartItemCount + cartItem.qty;
+                            this._cartService.setCartItemCount(setCartItemCount);
+                            let cartData = {
+                                itemsCount: setCartItemCount
+                            };
+                            this._cookie.put('customerCartCount', JSON.stringify(cartData));
+                        }
+
+                        this.validateProduct=false;
+                        return {cartItem: cartItem};
+                    },
+                    error => {
+                        return {error: "Please select qty."};
+                    });
+            },
+            error => {
+                return {error: "Please select qty."};
+            });
+        // this.toastr.success("done");
     }
 
     openDialog(){

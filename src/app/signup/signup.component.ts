@@ -36,7 +36,7 @@ export class SignupComponent implements OnInit {
     ngOnInit() {
         this._cookie.put('customerToken', "");
         this._cookie.put('customerDetail', "");
-        this._cookie.put('customerCartDetail', "");
+        this._cookie.put('customerCartCount', "");
     }
 
     checkEmailAvailable() {

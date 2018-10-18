@@ -1,9 +1,11 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { CategoryService } from './category.service';
 import { Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { CartService } from '../cart/cart.service';
+
 import * as _ from 'underscore';
 
 @Component({
@@ -16,8 +18,8 @@ export class CategoryComponent implements OnInit {
     categories: any;
     loadCategories:string="";
     userName:string="";
-    cartItemCount:number=0;
-    constructor(private _categoryService: CategoryService,private toastr: ToastrService,public location: Location,private _router:Router,private _cookie:CookieService) {
+    cartItemCount:string="";
+    constructor(private _categoryService: CategoryService,private toastr: ToastrService,public location: Location,private _router:Router,private _cookie:CookieService,private _cartService:CartService) {
     }
 
     ngOnInit() {
@@ -37,15 +39,27 @@ export class CategoryComponent implements OnInit {
                 if (title === "/apnaBazar/home" && previousUrl === "apnaBazar/home") {
                     this._cookie.put('previousUrl', "apnaBazar/category");
                     this._router.navigate(['/category']);
+                    return false;
                 }
                 this.getAllCategories();
             }
-            let customerDetail= this._cookie.get('customerDetail');
-            if (customerDetail) {
-                let customer = JSON.parse(customerDetail);
-                if (customer && !this.userName) {
-                    this.userName =  customer.firstname + " " + customer.lastname;
-                    console.log(this.userName);
+            if (this.categories.length > 0) {
+                let customerDetail = this._cookie.get('customerDetail');
+                if (customerDetail) {
+                    let customer = JSON.parse(customerDetail);
+                    if (customer) {
+                        let userName = customer.firstname + " " + customer.lastname;
+                        this._categoryService.setUserName(userName);
+                        this.userName= this._categoryService.getUserName();
+                    }
+                }
+                let customerCartCount = this._cookie.get('customerCartCount');
+                if (this._cookie.get('customerCartCount')) {
+                    let cart = JSON.parse(customerCartCount);
+                    if (cart) {
+                        this.cartItemCount = this._cartService.setCartItemCount(cart.itemsCount);
+                        this.cartItemCount = this._cartService.getCartItemCount();
+                    }
                 }
             }
             return true;
@@ -71,8 +85,18 @@ export class CategoryComponent implements OnInit {
                     if (customerDetail) {
                         let customer = JSON.parse(customerDetail);
                         if (customer) {
-                            this.userName = customer.firstname + " " + customer.lastname;
+                            let userName = customer.firstname + " " + customer.lastname;
+                            this._categoryService.setUserName(userName);
+                           this.userName= this._categoryService.getUserName();
                             console.log(this.userName);
+                        }
+                    }
+                    let  customerCartCount=this._cookie.get('customerCartCount');
+                    if(this._cookie.get('customerCartCount')){
+                        let cart = JSON.parse(customerCartCount);
+                        if (cart && !this.cartItemCount) {
+                            this.cartItemCount = this._cartService.setCartItemCount(cart.itemsCount);
+                            this.cartItemCount = this._cartService.getCartItemCount();
                         }
                     }
                     let previousUrl=  this._cookie.get('previousUrl');

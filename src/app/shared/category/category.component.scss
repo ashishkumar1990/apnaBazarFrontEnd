@@ -60,4 +60,15 @@
   margin-right: 5px;
   text-align: center;
   width: 1.6em;
+  position: absolute;
+  right: -21px;
+  margin-top: 2px;
+}
+.dropDown{
+   border-color: #51cbce;
+   color: #FFFFFF;
+   opacity: 1
+ }
+.mat-menu-item-highlighted:not([disabled]), .mat-menu-item.cdk-keyboard-focused:not([disabled]), .mat-menu-item.cdk-program-focused:not([disabled]), .mat-menu-item:hover:not([disabled]) {
+  background: #6dd3d6;
 }

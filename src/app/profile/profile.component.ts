@@ -10,7 +10,7 @@ import {CategoryService} from '../shared/category/category.service'
 import {ProductDetailService} from '../products/productDetail/product-detail.service'
 import {CartService} from '../shared/cart/cart.service'
 import { ToastrService } from 'ngx-toastr';
-import {AccountInformation,ChangePassword,AddressBook,CartInformation} from './intecface';
+import {AccountInformation,ChangePassword,AddressBook,CartInformation,PaymentInformation} from './intecface';
 import * as _ from 'underscore';
 
 
@@ -58,7 +58,14 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
         setCartInformation:false,
         cartItems: [],
         cartSubTotal: 0,
-
+        checkOutEnable:false
+    };
+    paymentInformation: PaymentInformation = {
+        loadingPaymentInformation: false,
+        spinnerValue: "",
+        shippingItems: [],
+        paymentMethods:[],
+        shippingTotalSegments: []
     };
     categories:any;
     @ViewChild('tabs')
@@ -89,6 +96,9 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
                 else if(selectedTab === "orders-information"){
                     this.selectedTab = 'OrdersInformation';
                 }
+                else if(selectedTab === "cart-checkout"){
+                    this.selectedTab = 'CheckOut';
+                }
             }
         );
     }
@@ -108,6 +118,7 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
             AddressBook: `/user-profile/address-book-information`,
             CartInformation: `/user-profile/cart-information`,
             OrdersInformation: `/user-profile/orders-information`,
+            CheckOut: `/user-profile/cart-checkout`,
         };
 
         this._route.navigateByUrl(routes[$event.nextId]);
@@ -139,6 +150,9 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
             this.cartInformation.spinnerValue="Fetching Cart Information";
             this.cartInformation.setCartInformation = true;
             this.getMyCartInformation();
+        }
+        if(this.selectedTab === "CheckOut" && !this.cartInformation.checkOutEnable){
+            this.loadPaymentOption();
         }
     }
     editAccountInformation(feild){
@@ -375,6 +389,68 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
                 },
                 error => {
                     $this.toastr.error(error.message);
+                }
+            );
+
+    }
+
+    loadPaymentOption() {
+        let customer = JSON.parse(this._cookie.get('customerDetail'));
+        if (!customer && customer.addresses.length === 0) {
+            return;
+        }
+        this.cartInformation.checkOutEnable=true;
+        this._route.navigateByUrl("/user-profile/cart-checkout");
+        this.paymentInformation.loadingPaymentInformation=true;
+        this.paymentInformation.spinnerValue="Loading Shipping & Payment Methods Information";
+        let address = {
+            "customer_id": customer.id,
+            "region": customer.addresses[0].region.region,
+            "region_id": customer.addresses[0].region_id,
+            "country_id": customer.addresses[0].country_id,
+            "street": customer.addresses[0].street,
+            "telephone": customer.addresses[0].telephone,
+            "postcode": customer.addresses[0].postcode,
+            "city": customer.addresses[0].city,
+            "firstname": customer.firstname,
+            "lastname": customer.lastname,
+            "prefix": "address_",
+            "region_code": customer.addresses[0].region.region_code
+        };
+        let  shippingData = {
+            "addressInformation": {
+                shippingAddress: {
+                    "sameAsBilling": 1
+                },
+                "billingAddress": {},
+                "shipping_method_code": "flatrate",
+                "shipping_carrier_code": "flatrate"
+            }
+
+        };
+        shippingData.addressInformation.billingAddress = _.extend(shippingData.addressInformation.billingAddress, address);
+        shippingData.addressInformation.shippingAddress = _.extend(shippingData.addressInformation.shippingAddress, address);
+        this._cartService.shippingInformation(shippingData)
+            .subscribe(
+                checkOut => {
+                    _.each(checkOut.totals.items, function (item) {
+                        item.base_price_incl_tax = (item.base_price_incl_tax).toFixed(2);
+                        item.base_row_total_incl_tax = (item.base_row_total_incl_tax).toFixed(2);
+                    });
+
+                    _.each(checkOut.totals.total_segments, function (totalSegment) {
+                        totalSegment.value = (totalSegment.value).toFixed(2);
+                    });
+                    this.toastr.success("Shipping information & Payment methods loaded successfully");
+                    this.paymentInformation.paymentMethods=checkOut.payment_methods;
+                    this.paymentInformation.shippingItems=checkOut.totals.items;
+                    this.paymentInformation.shippingTotalSegments=checkOut.totals.total_segments;
+                    this.paymentInformation.loadingPaymentInformation=false;
+                    this.cartInformation.spinnerValue="";
+                    this.cartInformation.checkOutEnable=true;
+                },
+                error => {
+                    this.toastr.error(error.message);
                 }
             );
 

@@ -16,6 +16,8 @@ export class CartService {
     private _removeCartItemurl = 'http://localhost/apnaBazar/rest/V1/carts/mine/items/';
     private _getCustomerCartData = 'http://localhost/apnaBazar/rest/V1/carts/mine';
     private _updateCartItem = 'http://localhost/apnaBazar/rest/V1/carts/mine/items/';
+    private _shippingInformation = 'http://localhost/apnaBazar/rest/V1/carts/mine/shipping-information';
+
     private cartItemCount;
 
     constructor(private _http: Http,private _cookie:CookieService){}
@@ -96,6 +98,18 @@ export class CartService {
         let tokenData=this._cookie.get("customerToken");
         options.headers.set("authorization", tokenData);
         return this._http.delete(this._removeCartItemurl+itemId,options)
+            .map((response: Response) => response.json())
+            .catch(this.handleError);
+    }
+
+    shippingInformation(shippingData) {
+        let options = new RequestOptions({
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            })});
+        let tokenData=this._cookie.get("customerToken");
+        options.headers.set("authorization", tokenData);
+        return this._http.post(this._shippingInformation,shippingData,options)
             .map((response: Response) => response.json())
             .catch(this.handleError);
     }

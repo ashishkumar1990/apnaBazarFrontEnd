@@ -38,4 +38,12 @@ export class CartInformation {
     setCartInformation:boolean;
     cartItems: any;
     cartSubTotal: number;
+    checkOutEnable:boolean;
+}
+export class PaymentInformation {
+    loadingPaymentInformation: boolean;
+    spinnerValue:string;
+    paymentMethods:any;
+    shippingItems:any;
+    shippingTotalSegments: any;
 }

@@ -219,7 +219,7 @@
                                         <div class="col-sm-8" style="margin-top: 50px" >
                                             <label  style="margin-top: 10px;margin-bottom: 10px;float:left" class="label label-warning">Payment Methods</label><br/>
                                             <div *ngFor="let paymentMethod of paymentInformation.paymentMethods" style="margin-top: 10px;margin-bottom: 10px;float:left" >
-                                                <button type="button" class="btn btn-info">
+                                                <button type="button" class="btn btn-info" (click)="createPaymentData(paymentMethod)">
                                                     {{paymentMethod.title}}
                                                 </button>
                                             </div>

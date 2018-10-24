@@ -27,6 +27,9 @@ import { ProductDetailModule } from './products/productDetail/product_detail.mod
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { MyDialogBoxComponent } from './products/products.component';
 import { CartValidationComponent } from './products/productDetail/product_detail.component';
+import { PaymentOptionComponent} from './payment-option/payment-option.component';
+import { CheckScriptsPipe, SafeHtmlPipe } from './payment-option/helper';
+import { PaymentStatusComponent } from './payment-status/payment-status.component';
 
 
 @NgModule({
@@ -39,7 +42,11 @@ import { CartValidationComponent } from './products/productDetail/product_detail
         FooterComponent,
         CategoryComponent,
         MyDialogBoxComponent,
-        CartValidationComponent
+        CartValidationComponent,
+        PaymentOptionComponent,
+        SafeHtmlPipe,
+        CheckScriptsPipe,
+        PaymentStatusComponent
     ],
     imports: [
         BrowserModule,

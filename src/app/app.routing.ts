@@ -9,8 +9,8 @@ import { ProductDetailComponent } from './products/productDetail/product_detail.
 import { ProfileComponent } from './profile/profile.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
-import { LandingComponent } from './landing/landing.component';
-import { NucleoiconsComponent } from './components/nucleoicons/nucleoicons.component';
+import { PaymentOptionComponent } from './payment-option/payment-option.component';
+import { PaymentStatusComponent } from './payment-status/payment-status.component';
 
 const routes: Routes =[
     { path: 'login',             component: LoginComponent },
@@ -20,8 +20,8 @@ const routes: Routes =[
     { path: 'signup',           component: SignupComponent },
     { path: 'category-id/:categoryId/products',component: ProductsComponent },
     { path: 'category-id/:currentCategoryId/product-sku/:product.sku',component: ProductDetailComponent },
-    { path: 'landing',          component: LandingComponent },
-    { path: 'nucleoicons',      component: NucleoiconsComponent },
+    { path: 'payment-option/:methodType/method',          component: PaymentOptionComponent },
+    { path: 'payment/status/success',      component: PaymentStatusComponent },
     { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
 

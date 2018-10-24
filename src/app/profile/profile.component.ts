@@ -455,4 +455,53 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
             );
 
     }
+    createPaymentData(paymentMethod){
+        this.paymentInformation.loadingPaymentInformation=true;
+        this.paymentInformation.spinnerValue="Loading payment Page";
+        let totalAmountSegment=_.findWhere(this.paymentInformation.shippingTotalSegments, {code: "grand_total"});
+        let data = {
+            "paymentMethod": {
+                "method": paymentMethod.code
+            }
+        };
+        let customer = JSON.parse(this._cookie.get('customerDetail'));
+        if(!customer){
+            return;
+        }
+        let customerId = customer.id;
+        let customerEmail = customer.email;
+        let totalPayableAmount = totalAmountSegment.value;
+        this._cartService.orderPlaced(data)
+            .subscribe(
+                orderId => {
+                    if (data.paymentMethod.method === "paytm") {
+                        let paytmData = {
+                            "ORDER_ID": orderId,
+                            "CUST_ID": customerId,
+                            "TXN_AMOUNT": totalPayableAmount,
+                            "CHANNEL_ID": "WEB",
+                            "INDUSTRY_TYPE_ID": "Retail",
+                            "WEBSITE": "WEB_STAGING"
+                        };
+                        this._cartService.paymentMethod(paytmData)
+                            .subscribe(
+                                responseHtml => {
+                                   this._cartService.setPaymentHtml(responseHtml);
+                                    let response=responseHtml;
+                                    this.paymentInformation.loadingPaymentInformation=false;
+                                    this.paymentInformation.spinnerValue="";
+                                    this._route.navigateByUrl(`payment-option/${data.paymentMethod.method}/method`);
+                                },
+                                error => {
+                                    this.toastr.error(error.message);
+                                }
+                            );
+                    }
+                },
+                error => {
+                    this.toastr.error(error.message);
+                }
+            );
+
+    }
 }

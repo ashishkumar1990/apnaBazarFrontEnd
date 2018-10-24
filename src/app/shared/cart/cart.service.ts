@@ -13,12 +13,15 @@ import 'rxjs/add/Observable/throw';
 export class CartService {
     private _quoteIdurl = 'http://localhost/apnaBazar/rest/V1/carts/mine';
     private _addCartItemurl = 'http://localhost/apnaBazar/rest/V1/carts/mine/items';
+    private _payTmurl = 'http://localhost/apnaBazar/PaytmKit/pgRedirect.php';
+    private _orderPlacedurl = 'http://localhost/apnaBazar/rest/V1/carts/mine/payment-information';
     private _removeCartItemurl = 'http://localhost/apnaBazar/rest/V1/carts/mine/items/';
     private _getCustomerCartData = 'http://localhost/apnaBazar/rest/V1/carts/mine';
     private _updateCartItem = 'http://localhost/apnaBazar/rest/V1/carts/mine/items/';
     private _shippingInformation = 'http://localhost/apnaBazar/rest/V1/carts/mine/shipping-information';
 
     private cartItemCount;
+    private paymentData;
 
     constructor(private _http: Http,private _cookie:CookieService){}
 
@@ -114,11 +117,42 @@ export class CartService {
             .catch(this.handleError);
     }
 
+    orderPlaced(data) {
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            'Accept'      : 'application/json',
+        });
+        let options = new RequestOptions({headers: headers});
+        let tokenData=this._cookie.get("customerToken");
+        options.headers.set("authorization", tokenData);
+        return this._http.post(this._orderPlacedurl,data,options)
+            .map((response: Response) =>response.json())
+            .catch(this.handleError);
+    }
+    paymentMethod(data) {
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            'Accept'      : 'application/json',
+        });
+         let options = new RequestOptions({headers: headers});
+        // let tokenData=this._cookie.get("customerToken");
+        // options.headers.set("authorization", tokenData);
+        return this._http.post(this._payTmurl,data,options)
+            .map((response: Response) =>response.text())
+            .catch(this.handleError);
+    }
+
     setCartItemCount(count) {
         return this.cartItemCount = count;
     }
     getCartItemCount() {
         return this.cartItemCount ;
+    }
+    setPaymentHtml(html) {
+        return this.paymentData = html;
+    }
+    getPaymentHtml() {
+        return this.paymentData ;
     }
     private handleError(error: Response) {
         //console.error(error);

@@ -310,6 +310,11 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
                     };
                     $this._cookie.put('customerCartCount', JSON.stringify(cartData));
                     $this._cartService.setCartItemCount(cartData.itemsCount);
+                    if (cart.items_count === 0) {
+                        $this.cartInformation.loadingCartItem = false;
+                        $this.cartInformation.spinnerValue = "";
+                        return;
+                    }
                     _.each(cart.items, function (item) {
                         item.subTotal=item.qty*item.price;
                         $this.cartInformation.cartSubTotal=$this.cartInformation.cartSubTotal+item.subTotal;
@@ -383,6 +388,13 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
                     });
                     $this.cartInformation.cartItems.splice(deleteItemIndex,1);
                     $this.cartInformation.cartSubTotal=( $this.cartInformation.cartSubTotal-(item.price*item.qty));
+                    let getCartItemCount = this._cartService.getCartItemCount();
+                    let setCartItemCount = !getCartItemCount||getCartItemCount===null? 0: getCartItemCount - 1;
+                    this._cartService.setCartItemCount(setCartItemCount);
+                    let cartData = {
+                        itemsCount: setCartItemCount
+                    };
+                    this._cookie.put('customerCartCount', JSON.stringify(cartData));
                     $this.cartInformation.loadingCartItem=false;
                     $this.cartInformation.spinnerValue="";
                     $this.toastr.success(" successfully removed Item from cart ");
@@ -487,7 +499,6 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
                             .subscribe(
                                 responseHtml => {
                                    this._cartService.setPaymentHtml(responseHtml);
-                                    let response=responseHtml;
                                     this.paymentInformation.loadingPaymentInformation=false;
                                     this.paymentInformation.spinnerValue="";
                                     this._route.navigateByUrl(`payment-option/${data.paymentMethod.method}/method`);

@@ -150,13 +150,16 @@
                         </ngb-tab>
                         <ngb-tab title="My Cart" id="CartInformation">
                             <ng-template ngbTabContent>
+                                <div class="wrapper" *ngIf="cartInformation.cartItems.length===0" [hidden]="cartInformation.loadingCartItem">
+                                    <h1>There is no item in your cart.</h1>
+                                </div>
                                 <div class="wrapper" style="padding-top: 10px; margin:0 auto;"
                                      *ngIf="cartInformation.loadingCartItem">
                                     <mat-spinner strokeWidth="3" [diameter]="50" mode='indeterminate'
                                                  style="margin:0 auto;stroke: #673ab7;"></mat-spinner>
                                     <span>{{cartInformation.spinnerValue}}</span>
                                 </div>
-                                <div class="container" [hidden]="cartInformation.loadingCartItem">
+                                <div class="container" [hidden]="cartInformation.loadingCartItem ||cartInformation.cartItems.length===0">
                                     <b style="margin-bottom: 10px;font-size: large">My Cart</b><br />
                                     <table id="cart" class="table table-hover table-condensed">
                                         <thead>

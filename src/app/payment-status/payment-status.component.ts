@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 import {SignupService} from "../signup/signup.service";
+import {CartService} from "../shared/cart/cart.service";
 import {ToastrService} from 'ngx-toastr';
 
 
@@ -19,7 +20,7 @@ export class PaymentStatusComponent implements OnInit {
   STATUS :any;
   GATEWAYNAME :any;
   TXNDATE:any;
-  constructor(private _cookie:CookieService,private _signupService: SignupService,private toastr: ToastrService) { }
+  constructor(private _cookie:CookieService,private _cartService:CartService, private _signupService: SignupService,private toastr: ToastrService) { }
 
   ngOnInit() {
     if (this._cookie.get('transactionDetails')) {
@@ -68,6 +69,13 @@ export class PaymentStatusComponent implements OnInit {
         .subscribe(
             cart => {
               console.log(cart);
+              let getCartItemCount = this._cartService.getCartItemCount();
+              let setCartItemCount = !getCartItemCount||getCartItemCount===null? 1: getCartItemCount + 1;
+              this._cartService.setCartItemCount(setCartItemCount);
+              let cartData = {
+                itemsCount: setCartItemCount
+              };
+              this._cookie.put('customerCartCount', JSON.stringify(cartData));
               this.toastr.success("customer cart created Successfully");
             },
             error => {

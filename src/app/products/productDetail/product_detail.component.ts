@@ -186,15 +186,13 @@ export class ProductDetailComponent implements OnInit {
                 return this._cartService.addCartItem(cartItem).subscribe(
                     cartItem => {
                         this.toastr.success("Item  " + cartItem.name + "  is successfully added in your shopping cart with quantity of " + cartItem.qty);
-                        if (cartItem.qty === this.addCart.qty) {
                             let getCartItemCount = this._cartService.getCartItemCount();
-                            let setCartItemCount = getCartItemCount + cartItem.qty;
+                            let setCartItemCount = !getCartItemCount||getCartItemCount===null? 1: getCartItemCount + 1;
                             this._cartService.setCartItemCount(setCartItemCount);
                             let cartData = {
                                 itemsCount: setCartItemCount
                             };
                             this._cookie.put('customerCartCount', JSON.stringify(cartData));
-                        }
                         this.validateProduct=false;
                         return {cartItem: cartItem};
                     },

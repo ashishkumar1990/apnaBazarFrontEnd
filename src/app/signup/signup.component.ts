@@ -103,7 +103,7 @@ export class SignupComponent implements OnInit {
                                                 console.log(cart);
                                                 this.toastr.success("customer cart created Successfully");
 
-                                                this._router.navigate(['home']);
+                                                this._router.navigate(['/category']);
                                             },
                                             error => {
                                                 this.toastr.error(error.message);

@@ -100,7 +100,7 @@ export class CategoryComponent implements OnInit {
                         }
                     }
                     let previousUrl=  this._cookie.get('previousUrl');
-                    if (previousUrl === "apnaBazar/category" || previousUrl === "apnaBazar/login" || previousUrl === "apnaBazar") {
+                    if (previousUrl === "apnaBazar/category" || previousUrl === "apnaBazar/login" || previousUrl === "apnaBazar/signup"|| previousUrl === "apnaBazar") {
                         this._router.navigate(['/home']);
                     }
                     console.log(this.userName);

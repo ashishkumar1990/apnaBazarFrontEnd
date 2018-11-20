@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {SignupService} from './signup.service';
 import {ToastrService} from 'ngx-toastr';
+import {MessageService} from 'primeng/api';
 import {Signup} from './signup';
 import {FormsModule, NgForm}  from '@angular/forms';
 import {AppRoutingModule} from '../app.routing';
@@ -12,7 +13,7 @@ import { CookieService } from 'angular2-cookie/services/cookies.service';
     selector: 'app-signup',
     templateUrl: './signup.component.html',
     styleUrls: ['./signup.component.scss'],
-    providers: [SignupService]
+    providers: [SignupService,MessageService]
 })
 export class SignupComponent implements OnInit {
     signup: Signup = {
@@ -30,7 +31,7 @@ export class SignupComponent implements OnInit {
     signupForm: NgForm;
     @ViewChild('signupForm') currentForm: NgForm;
 
-    constructor(private _cookie:CookieService,private _signupService: SignupService, private toastr: ToastrService, private _router: Router) {
+    constructor(private _cookie:CookieService,private _signupService: SignupService, private toastr: ToastrService, private _router: Router,private messageService: MessageService) {
     }
 
     ngOnInit() {
@@ -52,9 +53,13 @@ export class SignupComponent implements OnInit {
                         this.signup.emailExists = emailExists;
                         if (!this.signup.emailExists) {
                             this.currentForm.form.controls['email'].setErrors({'incorrect': true});
-                            this.toastr.error("Email already exists,please add new One");
+                            this.messageService.add({severity:'error', summary:'Email', detail:'Email already exists,please add new One'});
+
+                            // this.toastr.error("Email already exists,please add new One");
                         } else {
-                            this.toastr.success("Email Added Successfully");
+                            this.messageService.add({severity:'success', summary:'Email', detail:'Email Added Successfully'});
+
+                            // this.toastr.success("Email Added Successfully");
                             //working//this._router.navigateByUrl('/home');
                         }
 
@@ -96,12 +101,16 @@ export class SignupComponent implements OnInit {
                                     this._cookie.put('customerToken', "Bearer " + token);
                                     let tokenData=this._cookie.get('customerToken');
                                     this.createCustomer="Creating customer cart";
-                                    this.toastr.success("Create customer Successfully");
+                                    this.messageService.add({severity:'success', summary:'Customer', detail:'Create customer Successfully'});
+
+                                    // this.toastr.success("Create customer Successfully");
                                     this._signupService.customerCartCreate(tokenData)
                                         .subscribe(
                                             cart => {
-                                                console.log(cart);
-                                                this.toastr.success("customer cart created Successfully");
+                                                //console.log(cart);
+                                                this.messageService.add({severity:'success', summary:'Customer', detail:'Customer cart created Successfully"'});
+
+                                                // this.toastr.success("customer cart created Successfully");
 
                                                 this._router.navigate(['/category']);
                                             },

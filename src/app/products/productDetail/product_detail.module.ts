@@ -6,9 +6,8 @@ import { HttpModule } from '@angular/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule,Routes } from '@angular/router';
 import { AppMaterialDesignModule } from '../../app.material';
-
-
-
+import {ToastModule} from 'primeng/toast';
+import {MessagesModule} from 'primeng/messages';
 import { ProductDetailComponent } from './product_detail.component';
 
 import { ComponentsModule } from '../../components/components.module';
@@ -24,6 +23,8 @@ import { ComponentsModule } from '../../components/components.module';
         RouterModule,
         ComponentsModule,
         AppMaterialDesignModule,
+        ToastModule,
+        MessagesModule,
         NgbModule.forRoot()
 
     ],

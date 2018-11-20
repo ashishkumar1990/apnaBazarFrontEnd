@@ -1,5 +1,6 @@
 import { Component, OnInit,Input } from '@angular/core';
 import { HomeService } from './home.service';
+import {MessageService} from 'primeng/api';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from '../shared/category/category.service';
 import * as _ from 'underscore';
@@ -8,7 +9,7 @@ import * as _ from 'underscore';
     selector: 'app-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss'],
-    providers:[HomeService]
+    providers:[HomeService,MessageService]
 
 })
 
@@ -17,7 +18,7 @@ export class HomeComponent implements OnInit {
     loadHomePageProducts:string="";
      categories: any;
 
-    constructor(private _homeService: HomeService,private toastr: ToastrService,private _categoryService:CategoryService) {
+    constructor(private _homeService: HomeService,private toastr: ToastrService,private _categoryService:CategoryService,private messageService: MessageService) {
     }
     ngOnInit(){
         this.categories = this._categoryService.getValue();
@@ -32,7 +33,9 @@ export class HomeComponent implements OnInit {
                                 homePageProduct.image = image.value;
                             }
                         });
-                        this.toastr.success("Home Page Loaded Successfully");
+                        this.messageService.add({severity:'success', summary:'Home', detail:'Home Page Loaded Successfully'});
+
+                        // this.toastr.success("Home Page Loaded Successfully");
                         //this._router.navigate(['Home']);
                     },
                     error => {
@@ -57,7 +60,9 @@ export class HomeComponent implements OnInit {
                                 homePageProduct.image = image.value;
                             }
                         });
-                        this.toastr.success("Home Page Loaded Successfully");
+                        this.messageService.add({severity:'success', summary:'Home', detail:'Home Page Loaded Successfully'});
+
+                        // this.toastr.success("Home Page Loaded Successfully");
                         //this._router.navigate(['Home']);
                     },
                     error => {

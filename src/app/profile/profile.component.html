@@ -1,4 +1,6 @@
 <div class="wrapper" [hidden]="!categories">
+    <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+    <p-toast position="bottom-right"></p-toast>
     <div class="page-header page-header-xs" data-parallax="true" style="background-image: url('../assets/img/fabio-mangione.jpg');min-height: 25vh !important;">
         <div class="filter"></div>
     </div>
@@ -145,13 +147,14 @@
                                     </div>
 
                                 </div>
-                                <button type="button" style="margin-top:10px" class="btn btn-warning btn-round" [hidden]="addressBook.updatingAddressBook" (click)="updateAddress()">{{addressBook.disabled ? 'Edit Address Book' : "Update Address Book"}}</button>
+                                <button type="button" style="margin-top:10px" class="btn btn-warning btn-round" [hidden]="addressBook.updatingAddressBook"  (click)="updateAddress()">{{addressBook.disabled ? 'Edit Address Book' : "Update Address Book"}}</button>
                             </ng-template>
                         </ngb-tab>
                         <ngb-tab title="My Cart" id="CartInformation">
                             <ng-template ngbTabContent>
                                 <div class="wrapper" *ngIf="cartInformation.cartItems.length===0" [hidden]="cartInformation.loadingCartItem">
-                                    <h1>There is no item in your cart.</h1>
+                                    <img style="height: 300px;width: 300px"
+                                            src='../../assets/img/empty_cart.jpg'/>
                                 </div>
                                 <div class="wrapper" style="padding-top: 10px; margin:0 auto;"
                                      *ngIf="cartInformation.loadingCartItem">

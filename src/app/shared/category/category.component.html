@@ -1,3 +1,4 @@
+<p-toast position="bottom-right"></p-toast>
 <div class="wrapper"  *ngIf="isCategoryNavBarExists()&& categories && categories.length>0">
     <nav class="navbar navbar-expand-md bg-primary" style="height:40px;" >
         <a [routerLink]="['/home']" > <img
@@ -32,14 +33,14 @@
                 </li>
 
                 <!--<li  class="nav-item" style="margin-top: 23px" *ngIf="userName">-->
-                    <div ngbDropdown class="d-inline-block dropdown" style="margin-top: 23px">
+                    <div ngbDropdown class="d-inline-block dropdown" style="margin-top: 23px" *ngIf="userName">
                         <a class="dropDown" id="dropdownBasic1" ngbDropdownToggle style="margin-right: 8px;color: white;cursor: pointer"><i class="material-icons" style="color:mediumvioletred" >face</i></a>
                         <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-primary">
                             <a class="dropdown-item" routerLink="/user-profile/account-information">My Profile</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" routerLink="/user-profile/account-information">My Orders</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item">SignOut</a>
+                            <a class="dropdown-item" (click)="signOut()" style="cursor: pointer">SignOut</a>
                         </div>
                     </div>
                 <!--</li>-->
@@ -51,7 +52,7 @@
                     <a class="nav-link" routerLink="/login"><b >Login & SignUp</b></a>
                 </li>
 
-                <li class="nav-item" style="margin-top: 23px;margin-left: 5px;cursor: pointer" routerLink="/user-profile/cart-information">
+                <li class="nav-item" style="margin-top: 23px;margin-left: 5px;cursor: pointer" routerLink="/user-profile/cart-information"  *ngIf="userName">
                     <i class="material-icons " style="color:gold">add_shopping_cart</i>
                 </li>
                 <li style="margin-top: 15px;position: relative;margin-right: 15px;" *ngIf="cartItemCount">

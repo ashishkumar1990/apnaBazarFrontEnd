@@ -1,62 +1,95 @@
-<div class="form-group" *ngIf="paymentMethod==='paytm'">
-  <b>Order ID is : {{ORDER_ID}}</b><br/>
-  <b>Order Transaction Amount is : {{TXN_AMOUNT}} </b><br/>
-  <b>Order Transaction ID is : {{TXN_ID}}</b><br/>
-  <b>Order Bank Transaction ID is : {{BANKTXN_ID}} </b><br/>
-  <b>Order Transaction Date & Time is : {{TXNDATE}} </b><br/>
-  <b>Order Payment Gate Way Name is : {{GATEWAYNAME}} </b><br/>
-  <a style="color:darkblue" tabindex="-1" ng-click="continueShopping()"><b
-          style="text-decoration: underline;cursor: pointer;margin-left: 10px">continueShopping</b></a>
+<p-toast position="bottom-right"></p-toast>
+<div class="wrapper">
+    <div class="scooter-container">
+        <img id="scooter" src='../../assets/img/scooter.gif'/>
+    </div>
+    <div class="form-group" style="margin: auto;width: 78%;padding-left: 333px;" *ngIf="paymentMethod==='paytm'">
+        <b style="padding-left: 162px; color:green">Order Transaction Details</b>
+        <table>
+            <tr>
+                <td>Order Payment Method is</td>
+                <td>PayTM</td>
+            </tr>
+            <tr>
+                <td>Order ID is</td>
+                <td>{{ORDER_ID}}</td>
+            </tr>
+            <tr>
+                <td>Order Transaction Amount is</td>
+                <td>{{TXN_AMOUNT}}</td>
+            </tr>
+            <tr>
+                <td>Order Transaction ID is</td>
+                <td>{{TXN_ID}}</td>
+            </tr>
+            <tr>
+                <td>Order Bank Transaction ID is</td>
+                <td>{{BANKTXN_ID}}</td>
+            </tr>
+            <tr>
+                <td>Order Transaction Date & Time is</td>
+                <td>{{TXNDATE}}</td>
+            </tr>
+            <tr>
+                <td>Order Payment Gate Way Name is</td>
+                <td>{{GATEWAYNAME}}</td>
+            </tr>
+        </table>
+        <div style="padding-left: 196px">
+        <span class="label label-warning" style="margin-top:20px;cursor: pointer" routerLink="/home">Continue Shopping</span>
+        </div>
+    </div>
+
 </div>
 
 <!--<div class="container">-->
-  <!--<div class="row">-->
-    <!--<br class="col-sm-12 form-section">-->
-    <!--<br class="col-sm-8 form-row">-->
-    <!--<img style="height:50px;width:50px"-->
-         <!--ng-src='app/src/assets/icons/check.png'-->
-         <!--class="md-card-image" alt="Washed Out"><b style="color:green">THANK YOU!</b></br>-->
-    <!--<h3>Your Order is Confirmed Successfully</h3></br>-->
-    <!--<div class="form-group" *ngIf="paymentMethod==='paytm'">-->
-      <!--<b>Order ID is : {{ORDER_ID}}</b></br>-->
-      <!--<b>Order Transaction Amount is : {{TXN_AMOUNT}} </b></br>-->
-      <!--<b>Order Transaction ID is : {{TXN_ID}}</b></br>-->
-      <!--<b>Order Bank Transaction ID is : {{BANKTXN_ID}} </b></br>-->
-      <!--<b>Order Transaction Date & Time is : {{TXNDATE}} </b></br>-->
-      <!--<b>Order Payment Gate Way Name is : {{GATEWAYNAME}} </b></br>-->
-      <!--<a style="color:darkblue" tabindex="-1" ng-click="continueShopping()"><b-->
-              <!--style="text-decoration: underline;cursor: pointer;margin-left: 10px">continueShopping</b></a>-->
-    <!--</div>-->
+<!--<div class="row">-->
+<!--<br class="col-sm-12 form-section">-->
+<!--<br class="col-sm-8 form-row">-->
+<!--<img style="height:50px;width:50px"-->
+<!--ng-src='app/src/assets/icons/check.png'-->
+<!--class="md-card-image" alt="Washed Out"><b style="color:green">THANK YOU!</b></br>-->
+<!--<h3>Your Order is Confirmed Successfully</h3></br>-->
+<!--<div class="form-group" *ngIf="paymentMethod==='paytm'">-->
+<!--<b>Order ID is : {{ORDER_ID}}</b></br>-->
+<!--<b>Order Transaction Amount is : {{TXN_AMOUNT}} </b></br>-->
+<!--<b>Order Transaction ID is : {{TXN_ID}}</b></br>-->
+<!--<b>Order Bank Transaction ID is : {{BANKTXN_ID}} </b></br>-->
+<!--<b>Order Transaction Date & Time is : {{TXNDATE}} </b></br>-->
+<!--<b>Order Payment Gate Way Name is : {{GATEWAYNAME}} </b></br>-->
+<!--<a style="color:darkblue" tabindex="-1" ng-click="continueShopping()"><b-->
+<!--style="text-decoration: underline;cursor: pointer;margin-left: 10px">continueShopping</b></a>-->
+<!--</div>-->
 
-    <!--&lt;!&ndash;<div class="form-group" ng-if="paymentMethod==='instamojo'">&ndash;&gt;-->
-      <!--&lt;!&ndash;<b> your Order payment_id is : {{payment_id}}</b></br>&ndash;&gt;-->
-      <!--&lt;!&ndash;<b> your Order payment_request_id is : {{payment_request_id}}</b></br>&ndash;&gt;-->
-      <!--&lt;!&ndash;<a style="color:darkblue" tabindex="-1" ng-click="continueShopping()"><b&ndash;&gt;-->
-              <!--&lt;!&ndash;style="text-decoration: underline;cursor: pointer">continueShopping</b></a>&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="form-group" ng-if="paymentMethod==='instamojo'">&ndash;&gt;-->
+<!--&lt;!&ndash;<b> your Order payment_id is : {{payment_id}}</b></br>&ndash;&gt;-->
+<!--&lt;!&ndash;<b> your Order payment_request_id is : {{payment_request_id}}</b></br>&ndash;&gt;-->
+<!--&lt;!&ndash;<a style="color:darkblue" tabindex="-1" ng-click="continueShopping()"><b&ndash;&gt;-->
+<!--&lt;!&ndash;style="text-decoration: underline;cursor: pointer">continueShopping</b></a>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
 
-    <!--&lt;!&ndash;<div class="form-group" ng-if="paymentMethod==='razorPay'">&ndash;&gt;-->
-      <!--&lt;!&ndash;<b>Order ID is : {{orderId}}</b></br>&ndash;&gt;-->
-      <!--&lt;!&ndash;<b>Order payment_id is : {{payment_id}}</b></br>&ndash;&gt;-->
-      <!--&lt;!&ndash;<b>Order payment status : {{status}}</b></br>&ndash;&gt;-->
-      <!--&lt;!&ndash;<b>Order payment fee : <img style="height:12px;width:12px"&ndash;&gt;-->
-                                  <!--&lt;!&ndash;ng-src="{{'app/src/assets/icons/indianRupee.jpg'}}"&ndash;&gt;-->
-                                  <!--&lt;!&ndash;class="md-card-image" alt="Washed Out">{{fee}}</b></br>&ndash;&gt;-->
-      <!--&lt;!&ndash;<b>Order payment service tax : <img style="height:12px;width:12px"&ndash;&gt;-->
-                                          <!--&lt;!&ndash;ng-src="{{'app/src/assets/icons/indianRupee.jpg'}}"&ndash;&gt;-->
-                                          <!--&lt;!&ndash;class="md-card-image" alt="Washed Out">{{service_tax}}</b></br>&ndash;&gt;-->
-      <!--&lt;!&ndash;<a style="color:darkblue" tabindex="-1" ng-click="continueShopping()"><b&ndash;&gt;-->
-              <!--&lt;!&ndash;style="text-decoration: underline;cursor: pointer">continueShopping</b></a>&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="form-group" ng-if="paymentMethod==='razorPay'">&ndash;&gt;-->
+<!--&lt;!&ndash;<b>Order ID is : {{orderId}}</b></br>&ndash;&gt;-->
+<!--&lt;!&ndash;<b>Order payment_id is : {{payment_id}}</b></br>&ndash;&gt;-->
+<!--&lt;!&ndash;<b>Order payment status : {{status}}</b></br>&ndash;&gt;-->
+<!--&lt;!&ndash;<b>Order payment fee : <img style="height:12px;width:12px"&ndash;&gt;-->
+<!--&lt;!&ndash;ng-src="{{'app/src/assets/icons/indianRupee.jpg'}}"&ndash;&gt;-->
+<!--&lt;!&ndash;class="md-card-image" alt="Washed Out">{{fee}}</b></br>&ndash;&gt;-->
+<!--&lt;!&ndash;<b>Order payment service tax : <img style="height:12px;width:12px"&ndash;&gt;-->
+<!--&lt;!&ndash;ng-src="{{'app/src/assets/icons/indianRupee.jpg'}}"&ndash;&gt;-->
+<!--&lt;!&ndash;class="md-card-image" alt="Washed Out">{{service_tax}}</b></br>&ndash;&gt;-->
+<!--&lt;!&ndash;<a style="color:darkblue" tabindex="-1" ng-click="continueShopping()"><b&ndash;&gt;-->
+<!--&lt;!&ndash;style="text-decoration: underline;cursor: pointer">continueShopping</b></a>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
 
-    <!--&lt;!&ndash;<div class="form-group"&ndash;&gt;-->
-         <!--&lt;!&ndash;ng-if="paymentMethod!='instamojo' && paymentMethod!='paytm' && paymentMethod!='razorPay'">&ndash;&gt;-->
-      <!--&lt;!&ndash;<b> your order ID is : {{orderId}}</b></br>&ndash;&gt;-->
-      <!--&lt;!&ndash;<b> your payment Method is : {{paymentMethod}}</b></br>&ndash;&gt;-->
-      <!--&lt;!&ndash;<a style="color:darkblue" tabindex="-1" ng-click="continueShopping()"><b&ndash;&gt;-->
-              <!--&lt;!&ndash;style="text-decoration: underline;cursor: pointer">continueShopping</b></a>&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="form-group"&ndash;&gt;-->
+<!--&lt;!&ndash;ng-if="paymentMethod!='instamojo' && paymentMethod!='paytm' && paymentMethod!='razorPay'">&ndash;&gt;-->
+<!--&lt;!&ndash;<b> your order ID is : {{orderId}}</b></br>&ndash;&gt;-->
+<!--&lt;!&ndash;<b> your payment Method is : {{paymentMethod}}</b></br>&ndash;&gt;-->
+<!--&lt;!&ndash;<a style="color:darkblue" tabindex="-1" ng-click="continueShopping()"><b&ndash;&gt;-->
+<!--&lt;!&ndash;style="text-decoration: underline;cursor: pointer">continueShopping</b></a>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
 
-  <!--</div>-->
+<!--</div>-->
 
 <!--</div>-->

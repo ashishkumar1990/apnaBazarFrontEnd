@@ -24,7 +24,10 @@
           "assets/css/demo.css",
           "assets/css/nucleo-icons.css",
           "styles.scss",
-          "../node_modules/ngx-toastr/toastr.css"
+          "../node_modules/ngx-toastr/toastr.css",
+        "../node_modules/primeicons/primeicons.css",
+        "../node_modules/primeng/resources/themes/nova-light/theme.css",
+        "../node_modules/primeng/resources/primeng.min.css"
 
       ],
       "scripts": [

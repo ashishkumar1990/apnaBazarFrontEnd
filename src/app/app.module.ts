@@ -14,7 +14,6 @@ import { SignupComponent } from './signup/signup.component';
 
 import { LandingComponent } from './landing/landing.component';
 import { ProfileComponent } from './profile/profile.component';
-import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { CategoryComponent } from './shared/category/category.component';
 
@@ -30,6 +29,9 @@ import { CartValidationComponent } from './products/productDetail/product_detail
 import { PaymentOptionComponent} from './payment-option/payment-option.component';
 import { CheckScriptsPipe, SafeHtmlPipe } from './payment-option/helper';
 import { PaymentStatusComponent } from './payment-status/payment-status.component';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ToastModule} from 'primeng/toast';
+import {MessagesModule} from 'primeng/messages';
 
 
 @NgModule({
@@ -59,6 +61,9 @@ import { PaymentStatusComponent } from './payment-status/payment-status.componen
         ProductsModule,
         ProductDetailModule,
         AppMaterialDesignModule,
+        ConfirmDialogModule,
+        ToastModule,
+        MessagesModule,
         ReactiveFormsModule,
         ToastrModule.forRoot({
             timeOut: 5000,

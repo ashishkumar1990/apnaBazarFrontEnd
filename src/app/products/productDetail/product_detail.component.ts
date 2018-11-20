@@ -2,6 +2,7 @@ import {Component, OnInit,ViewChild,Inject} from '@angular/core';
 import {ProductDetailService} from './product-detail.service';
 import {ProductsService} from '../products.service';
 import {ToastrService} from 'ngx-toastr';
+import {MessageService} from 'primeng/api';
 import {ActivatedRoute, Router} from '@angular/router'
 import {CategoryService} from '../../shared/category/category.service';
 import {CookieService} from 'angular2-cookie/services/cookies.service';
@@ -17,7 +18,7 @@ import * as _ from 'underscore';
     selector: 'app-product-detail',
     templateUrl: './product_detail.component.html',
     styleUrls: ['./product_detail.component.scss'],
-    providers: [ProductDetailService]
+    providers: [ProductDetailService,MessageService]
 
 })
 
@@ -36,7 +37,7 @@ export class ProductDetailComponent implements OnInit {
     productDetailForm: NgForm;
     @ViewChild('productDetailForm') currentForm: NgForm;
 
-    constructor(public dialog: MatDialog,private _cookie: CookieService, private _productsService: ProductsService, private _productDetailService: ProductDetailService, private toastr: ToastrService, private _activeRouter: ActivatedRoute, private _router: Router, private _categoryService: CategoryService, private _cartService: CartService) {
+    constructor(public dialog: MatDialog,private _cookie: CookieService, private _productsService: ProductsService, private _productDetailService: ProductDetailService, private toastr: ToastrService, private _activeRouter: ActivatedRoute, private _router: Router, private _categoryService: CategoryService, private _cartService: CartService,private messageService: MessageService) {
     }
 
     ngOnInit() {
@@ -185,7 +186,9 @@ export class ProductDetailComponent implements OnInit {
                 };
                 return this._cartService.addCartItem(cartItem).subscribe(
                     cartItem => {
-                        this.toastr.success("Item  " + cartItem.name + "  is successfully added in your shopping cart with quantity of " + cartItem.qty);
+                        this.messageService.add({severity:'success', summary:'Cart', detail:'"Item  " + cartItem.name + "  is successfully added in your shopping cart with quantity of " + cartItem.qty'});
+
+                        // this.toastr.success("Item  " + cartItem.name + "  is successfully added in your shopping cart with quantity of " + cartItem.qty);
                             let getCartItemCount = this._cartService.getCartItemCount();
                             let setCartItemCount = !getCartItemCount||getCartItemCount===null? 1: getCartItemCount + 1;
                             this._cartService.setCartItemCount(setCartItemCount);

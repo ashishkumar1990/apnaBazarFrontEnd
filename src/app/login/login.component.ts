@@ -2,7 +2,8 @@ import { Component, OnInit,ViewChild } from '@angular/core';
 import { Router } from '@angular/router'
 import {Login} from './login';
 import {ToastrService} from 'ngx-toastr';
-import {FormsModule, NgForm}  from '@angular/forms';
+import {MessageService} from 'primeng/api';
+import {NgForm}  from '@angular/forms';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 import {LoginService} from './login.service';
 import { CartService } from '../shared/cart/cart.service';
@@ -14,7 +15,8 @@ import { CartService } from '../shared/cart/cart.service';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+    styleUrls: ['./login.component.scss'],
+    providers:[MessageService]
 })
 export class LoginComponent implements OnInit {
     login: Login = {
@@ -25,40 +27,9 @@ export class LoginComponent implements OnInit {
     loginForm: NgForm;
     @ViewChild('loginForm') currentForm: NgForm;
 
-    constructor(private _router:Router,private _cookie:CookieService,private _login:LoginService, private toastr: ToastrService,private _cartService:CartService) {
-        //FB.init({
-        //    appId      : '197240367495969',
-        //    cookie     : false,  // enable cookies to allow the server to access
-        //    // the session
-        //    xfbml      : true,  // parse social plugins on this page
-        //    version    : 'v2.5' // use graph api version 2.5
-        //});
+    constructor(private _router:Router,private _cookie:CookieService,private _login:LoginService, private toastr: ToastrService,private _cartService:CartService,private messageService: MessageService) {
+
     }
-
-    //
-    //statusChangeCallback(response: any) {
-    //    if (response.status === 'connected') {
-    //        console.log('connected');
-    //    }
-    //}
-
-    onFacebookLoginClick() {
-        //FB.logout();
-        //FB.login(function(result) {
-        //    this.loged = true;
-        //    this.token = result;
-        //    FB.api('/me?fields=id,name,first_name,gender,picture.width(150).height(150),age_range,friends',
-        //        function(result) {
-        //            if (result && !result.error) {
-        //                this.user = result;
-        //                console.log(this.user);
-        //            } else {
-        //                console.log(result.error);
-        //            }
-        //        });
-        //});
-    }
-
     ngOnInit() {
         this._cookie.put('customerToken', "");
         this._cookie.put('customerDetail', "");
@@ -79,14 +50,17 @@ export class LoginComponent implements OnInit {
             token => {
                 this._cookie.put('customerToken', "Bearer " + token);
                 let tokenData=this._cookie.get('customerToken');
-                this.toastr.success("Login customer Successfully");
+                this.messageService.add({severity:'success', summary:'Login', detail:'Login customer Successfully'});
+
+                // this.toastr.success("Login customer Successfully");
                 this.loading="Loading Customer";
                 this._login.getCustomerDetail(tokenData)
                     .subscribe(
                         customer => {
                             this._cookie.put('customerDetail', JSON.stringify(customer));
+                            this.messageService.add({severity:'success', summary:'Customer', detail:'Customer details loaded Successfully'});
 
-                            this.toastr.success("customer loaded Successfully");
+                            // this.toastr.success("customer loaded Successfully");
                             this.loading="Loading customer cart";
                             this._cartService.getCustomerCartDetail()
                                 .subscribe(
@@ -96,7 +70,9 @@ export class LoginComponent implements OnInit {
                                         };
                                         this._cookie.put('customerCartCount', JSON.stringify(cartData));
                                         this._cartService.setCartItemCount(cartData.itemsCount);
-                                        this.toastr.success("customer cart loaded Successfully");
+                                        this.messageService.add({severity:'success', summary:'Cart', detail:'Customer cart loaded Successfully'});
+
+                                        // this.toastr.success("customer cart loaded Successfully");
                                         this._router.navigate(['/category']);
                                     },
                                     error => {

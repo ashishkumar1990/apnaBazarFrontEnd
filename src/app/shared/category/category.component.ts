@@ -3,6 +3,7 @@ import { Location, LocationStrategy, PathLocationStrategy } from '@angular/commo
 import { CategoryService } from './category.service';
 import { Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr';
+import {MessageService} from 'primeng/api';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { CartService } from '../cart/cart.service';
 
@@ -12,14 +13,14 @@ import * as _ from 'underscore';
     selector: 'app-category',
     templateUrl: './category.component.html',
     styleUrls: ['./category.component.scss'],
-    providers:[]
+    providers:[MessageService]
 })
 export class CategoryComponent implements OnInit {
     categories: any;
     loadCategories:string="";
     userName:string="";
     cartItemCount:string="";
-    constructor(private _categoryService: CategoryService,private toastr: ToastrService,public location: Location,private _router:Router,private _cookie:CookieService,private _cartService:CartService) {
+    constructor(private _categoryService: CategoryService,private toastr: ToastrService,public location: Location,private _router:Router,private _cookie:CookieService,private _cartService:CartService,private messageService: MessageService) {
     }
 
     ngOnInit() {
@@ -30,6 +31,9 @@ export class CategoryComponent implements OnInit {
         var title = this.location.prepareExternalUrl(this.location.path());
         if (title === '/apnaBazar' || title === '/apnaBazar/login' || title === '/apnaBazar/signup') {
             return false;
+        }
+        if (title === "/apnaBazar/category") {
+            this._router.navigate(['/home']);
         }
         else {
             let value=this._categoryService.getLoadingValue();
@@ -77,8 +81,9 @@ export class CategoryComponent implements OnInit {
                             return category;
                         }
                     });
+                    this.messageService.add({severity:'success', summary:'Categories', detail:'Categories Loaded Successfully'});
 
-                    this.toastr.success("Categories Loaded Successfully");
+                    // this.toastr.success("Categories Loaded Successfully");
                     this._categoryService.setValue(categoriesData);
                     this.categories = this._categoryService.getValue();
                    let customerDetail= this._cookie.get('customerDetail');
@@ -99,12 +104,12 @@ export class CategoryComponent implements OnInit {
                             this.cartItemCount = this._cartService.getCartItemCount();
                         }
                     }
-                    let previousUrl=  this._cookie.get('previousUrl');
-                    if (previousUrl === "apnaBazar/category" || previousUrl === "apnaBazar/login" || previousUrl === "apnaBazar/signup"|| previousUrl === "apnaBazar") {
-                        this._router.navigate(['/home']);
-                    }
-                    console.log(this.userName);
                     this.loadCategories = "";
+                    let previousUrl=  this._cookie.get('previousUrl');
+                    if (previousUrl === "apnaBazar/category"  || previousUrl === "apnaBazar/login" || previousUrl === "apnaBazar/signup"|| previousUrl === "apnaBazar") {
+                        this._router.navigate(['/category']);
+                    }
+
                 },
                 error => {
                     this.categories = [];
@@ -119,5 +124,9 @@ export class CategoryComponent implements OnInit {
         this._router.navigateByUrl(`category-id/${subCategory.id}/products`);
     }
 
+    signOut() {
+        this._cookie.removeAll();
+        this._router.navigateByUrl(`/login`);
+    }
 
 }

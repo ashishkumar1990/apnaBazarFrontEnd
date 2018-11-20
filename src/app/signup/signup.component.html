@@ -1,3 +1,4 @@
+<p-toast position="bottom-right"></p-toast>
 <div class="wrapper" [hidden]="createCustomer">
   <div class="page-header" style="background-image: url('../assets/img/login-image.jpg');">
     <div class="filter"></div>
@@ -52,7 +53,7 @@
               <input type="password" class="form-control" id="password" required  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}" [(ngModel)]="signup.password" placeholder="Password" name="password" #password="ngModel">
               <div *ngIf="password.errors && (password.dirty || password.touched)" class="alert alert-danger">
                 <div [hidden]="!password.errors.pattern">
-                  password is contains Lower Case, Upper Case, Digits, Special Characters.
+                 Lower & Upper Case,Digits,Special Characters required.
               </div>  </div>
               <label>Conform Password *</label>
               <input type="password" class="form-control" id="conformPassword" placeholder="Conform Password" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}" [(ngModel)]="signup.conformPassword" name="conformPassword" #conformPassword="ngModel">

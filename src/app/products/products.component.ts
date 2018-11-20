@@ -1,6 +1,7 @@
 import {Component, OnInit,ViewChild,Inject} from '@angular/core';
 import {ProductsService} from './products.service';
 import {ToastrService} from 'ngx-toastr';
+import {MessageService} from 'primeng/api';
 import {FormsModule, NgForm}  from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router'
 import { CategoryService } from '../shared/category/category.service';
@@ -15,7 +16,7 @@ import * as _ from 'underscore';
     selector: 'app-products',
     templateUrl: './products.component.html',
     styleUrls: ['./products.component.scss'],
-    providers: []
+    providers: [MessageService]
 
 })
 
@@ -41,7 +42,7 @@ export class ProductsComponent implements OnInit {
     productsForm: NgForm;
     @ViewChild('productsForm') currentForm: NgForm;
 
-    constructor(public dialog: MatDialog,private _cookie:CookieService,private _productsService: ProductsService, private toastr: ToastrService, private _activeRouter: ActivatedRoute,private _router: Router, private _categoryService:CategoryService,private _cartService:CartService) {
+    constructor(public dialog: MatDialog,private _cookie:CookieService,private _productsService: ProductsService, private toastr: ToastrService, private _activeRouter: ActivatedRoute,private _router: Router, private _categoryService:CategoryService,private _cartService:CartService,private messageService: MessageService) {
     }
 
     ngOnInit() {
@@ -54,7 +55,9 @@ export class ProductsComponent implements OnInit {
                     products => {
                         this.resetProducts();
                         if (!products.items) {
-                            this.toastr.success("No items found in that category");
+                            this.messageService.add({severity:'success', summary:'Items', detail:'No items found in that category'});
+
+                            // this.toastr.success("No items found in that category");
                             this.loadProducts = "";
                             return;
                         }
@@ -215,8 +218,11 @@ export class ProductsComponent implements OnInit {
                                                         }
                                                     }
                                                 });
-                                                this.toastr.success("Filter loaded successfully");
-                                                this.toastr.success("Category products loaded successfully");
+                                                this.messageService.add({severity:'success', summary:'Filters', detail:'Filter loaded successfully'});
+
+                                                // this.toastr.success("Filter loaded successfully");
+                                                // this.toastr.success("Category products loaded successfully");
+                                                this.messageService.add({severity:'success', summary:'Products', detail:'Category products loaded successfully'});
                                                 this.loadProducts = "";
                                                 let previousUrl = this._cookie.get('previousUrl');
                                                 if (previousUrl.indexOf("product-sku") !== -1) {
@@ -385,7 +391,9 @@ export class ProductsComponent implements OnInit {
                 };
                 return this._cartService.addCartItem(cartItem).subscribe(
                     cartItem => {
-                        this.toastr.success("Item  " + cartItem.name + "  is successfully added in your shopping cart with quantity of " + cartItem.qty);
+                        this.messageService.add({severity:'success', summary:'Cart', detail:"Item  " + cartItem.name + "  is successfully added in your shopping cart with quantity of " + cartItem.qty});
+
+                        // this.toastr.success("Item  " + cartItem.name + "  is successfully added in your shopping cart with quantity of " + cartItem.qty);
                         let getCartItemCount = this._cartService.getCartItemCount();
                         let setCartItemCount = !getCartItemCount||getCartItemCount===null? 1: getCartItemCount + 1;
                         this._cartService.setCartItemCount(setCartItemCount);

@@ -11,6 +11,8 @@ import {ProductDetailService} from '../products/productDetail/product-detail.ser
 import {CartService} from '../shared/cart/cart.service'
 import { ToastrService } from 'ngx-toastr';
 import {AccountInformation,ChangePassword,AddressBook,CartInformation,PaymentInformation} from './intecface';
+import {ConfirmationService} from 'primeng/api';
+import {MessageService} from 'primeng/api';
 import * as _ from 'underscore';
 
 
@@ -19,7 +21,7 @@ import * as _ from 'underscore';
     selector: 'app-profile',
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss'],
-    providers: [ProductDetailService]
+    providers: [ProductDetailService,ConfirmationService,MessageService]
 })
 
 export class ProfileComponent implements OnInit, AfterViewChecked {
@@ -71,7 +73,7 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
     @ViewChild('tabs')
     private tabs: NgbTabset;
 
-    constructor(private _activeRoute: ActivatedRoute, private _route: Router,private toastr: ToastrService,private _cookie:CookieService,private _profileService:ProfileService,private _categoryService:CategoryService,private _cartService:CartService,private _productDetailService:ProductDetailService) {
+    constructor(private _activeRoute: ActivatedRoute, private _route: Router,private toastr: ToastrService,private _cookie:CookieService,private _profileService:ProfileService,private _categoryService:CategoryService,private _cartService:CartService,private _productDetailService:ProductDetailService,private confirmationService: ConfirmationService,private messageService: MessageService) {
         this._activeRoute.data.subscribe(d => {
             this.selectedTab = d.name;
         });
@@ -186,7 +188,9 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
                             this._categoryService.setUserName(userName);
                         }
                     }
-                    this.toastr.error("Updated Account Successfully");
+                    this.messageService.add({severity:'success', summary:'Account', detail:'Updated Account Successfully'});
+
+                    // this.toastr.error("Updated Account Successfully");
                     this.accountInformation.updatingAccount=false;
                     this.accountInformation.disabled=true;
                 },
@@ -211,7 +215,9 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
         this._profileService.changePassword(customerPassword)
             .subscribe(
                 password => {
-                    this.toastr.error("Updated Password Successfully");
+                    this.messageService.add({severity:'success', summary:'Password Updated', detail:'Updated Password Successfully'});
+
+                    // this.toastr.error("Updated Password Successfully");
                     this.changePassword.updatingPassword = false;
 
                 },
@@ -228,7 +234,7 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
         }
         else {
             this.addressBook.updatingAddressBook = true;
-            if (!this.addressBook.firstName && this.addressBook.lastName && !this.addressBook.telephone && !(this.addressBook.addressLine1 || this.addressBook.addressLine2) && !this.addressBook.city && !this.addressBook.region && !this.addressBook.postcode) {
+            if (!this.addressBook.firstName || ! this.addressBook.lastName || !this.addressBook.telephone || !(this.addressBook.addressLine1 || this.addressBook.addressLine2) || !this.addressBook.city || !this.addressBook.region || !this.addressBook.postcode) {
                 this.addressBook.updatingAddressBook = false;
                 this.accountInformation.disabled = false;
                 return;
@@ -286,7 +292,9 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
                                     this._categoryService.setUserName(userName);
                                 }
                             }
-                            this.toastr.success("Updated Address Book Successfully");
+                            this.messageService.add({severity:'success', summary:'Address Book', detail:'Updated Address Book Successfully'});
+
+                            // this.toastr.success("Updated Address Book Successfully");
                             this.addressBook.updatingAddressBook = false;
                             this.addressBook.disabled = true;
                         },
@@ -364,7 +372,9 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
                     $this.cartInformation.cartSubTotal=$this.cartInformation.cartSubTotal+updatedCartItem.price;
                     $this.cartInformation.loadingCartItem=false;
                     $this.cartInformation.spinnerValue="";
-                    $this.toastr.success("Item quantity updated successfully");
+                    this.messageService.add({severity:'success', summary:'Add Item ', detail:'Item quantity updated successfully'});
+
+                    // $this.toastr.success("Item quantity updated successfully");
                 },
                 error => {
                     $this.toastr.error(error.message);
@@ -397,7 +407,9 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
                     this._cookie.put('customerCartCount', JSON.stringify(cartData));
                     $this.cartInformation.loadingCartItem=false;
                     $this.cartInformation.spinnerValue="";
-                    $this.toastr.success(" successfully removed Item from cart ");
+                    this.messageService.add({severity:'success', summary:'Remove Item ', detail:'Item removed successfully from cart'});
+
+                    // $this.toastr.success(" Successfully removed Item from cart ");
                 },
                 error => {
                     $this.toastr.error(error.message);
@@ -408,7 +420,8 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
 
     loadPaymentOption() {
         let customer = JSON.parse(this._cookie.get('customerDetail'));
-        if (!customer && customer.addresses.length === 0) {
+        if (!customer || customer.addresses.length === 0) {
+            this.updateBillingAddressPopUp();
             return;
         }
         this.cartInformation.checkOutEnable=true;
@@ -453,7 +466,8 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
                     _.each(checkOut.totals.total_segments, function (totalSegment) {
                         totalSegment.value = (totalSegment.value).toFixed(2);
                     });
-                    this.toastr.success("Shipping information & Payment methods loaded successfully");
+                    this.messageService.add({severity:'success', summary:'Shipping information & Payment methods ', detail:'Shipping information & Payment methods loaded successfully'});
+                    // this.toastr.success("Shipping information & Payment methods loaded successfully");
                     this.paymentInformation.paymentMethods=checkOut.payment_methods;
                     this.paymentInformation.shippingItems=checkOut.totals.items;
                     this.paymentInformation.shippingTotalSegments=checkOut.totals.total_segments;
@@ -514,5 +528,19 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
                 }
             );
 
+    }
+
+    updateBillingAddressPopUp() {
+        this.confirmationService.confirm({
+            message: 'There is no Billing address set in your account?',
+            header: 'Billing address Not Set',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+              this._route.navigateByUrl('/user-profile/address-book-information')
+            },
+            reject: () => {
+                this.messageService.add({severity:'error', summary:'Address Not Updated ', detail:'WithOut billing address You are not to proceed checkOut page'});
+            }
+        });
     }
 }

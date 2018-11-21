@@ -16,6 +16,7 @@ import {MessageService} from 'primeng/api';
 export class PaymentStatusComponent implements OnInit {
     transaction: any;
     paymentMethod: any;
+    CUST_ID:any;
     ORDER_ID: any;
     TXN_AMOUNT: any;
     TXN_ID: any;
@@ -58,19 +59,20 @@ export class PaymentStatusComponent implements OnInit {
                 //   $scope.fee = Transaction.transactionDetails.fee/100;
                 //   $scope.orderId = Transaction.transactionDetails.notes.shopping_order_id;
                 // }
-                else {
-                    this.paymentMethod = transactionDetails.paymentMethod;
-                    this.ORDER_ID = transactionDetails.orderId;
-                }
+
             }
         }
-        // else {
-        //   return {
-        //     "orderId": "",
-        //     "paymentMethod": ""
-        //
-        //   };
-        // }
+        else {
+            let transactionOrderDetails = JSON.parse(this._cookie.get('transactionOrderDetails'));
+            if(transactionOrderDetails){
+                this.paymentMethod = transactionOrderDetails.paymentMethod.method;
+                this.CUST_ID = transactionOrderDetails.CUST_ID;
+                this.ORDER_ID = transactionOrderDetails.ORDER_ID;
+                this.TXN_AMOUNT = transactionOrderDetails.TXN_AMOUNT;
+            }
+        }
+        this.messageService.add({severity:'success', summary:'Order Placed', detail:'Order placed Successfully'});
+
         let tokenData = this._cookie.get("customerToken");
         this._signupService.customerCartCreate(tokenData)
             .subscribe(

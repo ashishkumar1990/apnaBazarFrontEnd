@@ -483,12 +483,16 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
     }
     createPaymentData(paymentMethod){
         this.paymentInformation.loadingPaymentInformation=true;
-        this.paymentInformation.spinnerValue="Loading payment Page";
+        this.paymentInformation.spinnerValue="Placing Order";
         let totalAmountSegment=_.findWhere(this.paymentInformation.shippingTotalSegments, {code: "grand_total"});
         let data = {
             "paymentMethod": {
                 "method": paymentMethod.code
-            }
+            },
+            ORDER_ID:"",
+            CUST_ID:"",
+            TXN_AMOUNT:""
+
         };
         let customer = JSON.parse(this._cookie.get('customerDetail'));
         if(!customer){
@@ -521,6 +525,12 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
                                     this.toastr.error(error.message);
                                 }
                             );
+                    }else{
+                        data.ORDER_ID=orderId;
+                        data.CUST_ID=customerId;
+                        data.TXN_AMOUNT= totalPayableAmount;
+                        this._cookie.put('transactionOrderDetails',JSON.stringify(data));
+                        this._route.navigateByUrl('/payment/status/success');
                     }
                 },
                 error => {

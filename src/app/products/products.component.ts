@@ -188,7 +188,7 @@ export class ProductsComponent implements OnInit {
                                         this._productsService.getCategoryProductsPath(this.currentCategoryId).subscribe(
                                             data => {
                                                  let pathValues = data.path.split("/");
-                                                 $this.path.push("Home");
+                                                 $this.path.push({label:'Home',url:"http://localhost:4200/apnaBazar/home"});
                                                 $this.currentCategoryName =  data.name;
                                                  let categoryChildren,subChildren;
                                                 _.each(pathValues, function (pathValue) {
@@ -198,7 +198,7 @@ export class ProductsComponent implements OnInit {
 
                                                     let category = _.findWhere($this.categories, {'id': Number(pathValue)});
                                                     if (category) {
-                                                        $this.path.push(category.name);
+                                                        $this.path.push({label:category.name,url:"http://localhost:4200/apnaBazar/category-id/"+pathValue+"/products"});
                                                         if (category.children_data.length > 0) {
                                                             categoryChildren = category.children_data;
                                                         }
@@ -208,12 +208,12 @@ export class ProductsComponent implements OnInit {
                                                             if (SubCategory.children_data.length > 0) {
                                                                 subChildren = SubCategory.children_data;
                                                             }
-                                                            $this.path.push(SubCategory.name);
+                                                            $this.path.push({label:SubCategory.name,url:"http://localhost:4200/apnaBazar/category-id/"+pathValue+"/products"});
                                                         }
                                                         else if(subChildren){
                                                             let SubChildCategory = _.findWhere(subChildren, {'id': Number(pathValue)});
                                                             if(SubChildCategory){
-                                                                $this.path.push(SubChildCategory.name);
+                                                                $this.path.push({label:SubChildCategory.name,url:"http://localhost:4200/apnaBazar/category-id/"+pathValue+"/products"});
                                                             }
                                                         }
                                                     }

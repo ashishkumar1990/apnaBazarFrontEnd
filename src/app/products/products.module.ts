@@ -8,6 +8,7 @@ import { RouterModule,Routes } from '@angular/router';
 import { AppMaterialDesignModule } from '../app.material';
 import {ToastModule} from 'primeng/toast';
 import {MessagesModule} from 'primeng/messages';
+import {BreadcrumbModule} from 'primeng/breadcrumb';
 
 import { ProductsComponent } from './products.component';
 
@@ -25,6 +26,7 @@ import { ComponentsModule } from '../components/components.module';
         AppMaterialDesignModule,
         ToastModule,
         MessagesModule,
+        BreadcrumbModule,
         NgbModule.forRoot()
     ],
     declarations: [ ProductsComponent ],

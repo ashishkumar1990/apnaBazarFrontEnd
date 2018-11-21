@@ -1,14 +1,16 @@
 <p-toast position="bottom-right"></p-toast>
 <div class=" col-sm-12 form-row" [hidden]="loadProducts" style="margin-top: 20px">
     <div class=" col-sm-1 form-row"></div>
-    <div *ngFor="let p of path">
-        <a style="cursor: pointer;">
-            <b><span>{{p}}</span></b>
-            <span *ngIf="p!==currentCategoryName" style=" width: 32px;display: inline-block;text-align: center;">
-                 >
-            </span>
-        </a>
-    </div>
+    <!--<div *ngFor="let p of path">-->
+        <!--<a style="cursor: pointer;">-->
+            <!--<b><span>{{p}}</span></b>-->
+            <!--<span *ngIf="p!==currentCategoryName" style=" width: 32px;display: inline-block;text-align: center;">-->
+                 <!--&gt;-->
+            <!--</span>-->
+        <!--</a>-->
+    <!--</div>-->
+    <p-breadcrumb [model]="path"></p-breadcrumb>
+
 </div>
 
 <div class="spinner-wrapper" *ngIf="validateProduct"><div class="spinner"></div></div>

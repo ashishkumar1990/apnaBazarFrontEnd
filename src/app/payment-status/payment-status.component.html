@@ -39,7 +39,31 @@
         <span class="label label-warning" style="margin-top:20px;cursor: pointer" routerLink="/home">Continue Shopping</span>
         </div>
     </div>
+    <div class="form-group" style="margin: auto;width: 78%;padding-left: 333px;" *ngIf="paymentMethod==='cashondelivery'">
+        <b style="padding-left: 162px; color:green">Order Transaction Details</b>
+        <table>
+            <tr>
+                <td>Order Payment Method is</td>
+                <td>Cash On Delivery</td>
+            </tr>
+            <tr>
+                <td>Customer ID is</td>
+                <td>{{CUST_ID}}</td>
+            </tr>
+            <tr>
+                <td>Order ID is</td>
+                <td>{{ORDER_ID}}</td>
+            </tr>
+            <tr>
+                <td>Order Transaction Amount is</td>
+                <td>{{TXN_AMOUNT}}</td>
+            </tr>
 
+        </table>
+        <div style="padding-left: 196px">
+            <span class="label label-warning" style="margin-top:20px;cursor: pointer" routerLink="/home">Continue Shopping</span>
+        </div>
+    </div>
 </div>
 
 <!--<div class="container">-->
